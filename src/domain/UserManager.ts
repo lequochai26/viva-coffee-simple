@@ -27,8 +27,13 @@ class UserManager implements IUserManager {
             throw error;
         }
 
-        // Converting 
-        const result: User[] = await this.multiDataToUser(usersData, path);
+        // Try converting
+        try {
+            var result: User[] = await this.multiDataToUser(usersData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -43,8 +48,13 @@ class UserManager implements IUserManager {
             throw error;
         }
 
-        // Converting
-        const result: User[] = await this.multiDataToUser(usersData, path);
+        // Try converting
+        try {
+            var result: User[] = await this.multiDataToUser(usersData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -64,8 +74,13 @@ class UserManager implements IUserManager {
             return;
         }
 
-        // Converting
-        const user: User = await this.dataToUser(userData, path);
+        // Try converting
+        try {
+            var user: User = await this.dataToUser(userData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return user
         return user;
@@ -174,8 +189,13 @@ class UserManager implements IUserManager {
         user.FullName = data.fullName;
         user.Permission = data.permission as UserPermission;
         
-        // Created orders dependency handling
-        await createdOrdersHandling(user, path);
+        // Dependencies handling
+        try {
+            await createdOrdersHandling(user, path);
+        }
+        catch (error: any){
+            throw error;
+        }
 
         // Return user
         return user;
@@ -185,9 +205,14 @@ class UserManager implements IUserManager {
         // Result initialization
         const result: User[] = [];
 
-        // Converting
-        for (const userData of data) {
-            result.push(await this.dataToUser(userData, path));
+        // Try converting
+        try {
+            for (const userData of data) {
+                result.push(await this.dataToUser(userData, path));
+            }
+        }
+        catch (error: any) {
+            throw error;
         }
 
         // Return result
