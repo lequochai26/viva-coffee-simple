@@ -63,7 +63,7 @@ class ItemTypeDBHandler implements IItemTypeDBHandler {
 
     public async save(target: ItemTypeData): Promise<void> {
         try {
-            if (!await get(collectionName, { id: target.id }, pattern)) {
+            if (!await this.get(target.id)) {
                 return this.insert(target);
             }
             else {
