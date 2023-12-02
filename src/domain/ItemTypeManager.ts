@@ -181,6 +181,9 @@ class ItemTypeManager implements IItemTypeManager {
         itemType.Id = data.id;
         itemType.Name = data.name;
 
+        // Path pushing
+        path.push(itemType);
+
         // Dependencies handling
         try {
             await itemsHandling(itemType, path);
