@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Test folder
 /src/test
+
+# .env
+.env
