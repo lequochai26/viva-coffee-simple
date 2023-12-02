@@ -197,6 +197,9 @@ class OrderManager implements IOrderManager {
         order.Date = data.date,
         order.TotalPrice = data.totalPrice;
 
+        // Path pushing
+        path.push(order);
+
         // Dependencies handling
         try {
             if (data.createdBy) {
