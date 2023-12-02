@@ -213,6 +213,23 @@ class ItemManager implements IItemManager {
             type: (item.Type ? item.Type.Id : undefined)
         };
     }
+
+    // Getters / setters:
+    public get ItemTypeManager(): IItemTypeManager | undefined {
+        return this.itemTypeManager;
+    }
+
+    public set ItemTypeManager(itemTypeManager: IItemTypeManager | undefined) {
+        this.itemTypeManager = itemTypeManager;
+    }
+
+    public get OrderItemManager(): IOrderItemManager | undefined {
+        return this.orderItemManager;
+    }
+
+    public set OrderItemManager(orderItemManager: IOrderItemManager | undefined) {
+        this.orderItemManager = orderItemManager;
+    }
 }
 
 export default ItemManager;
