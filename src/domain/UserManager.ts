@@ -188,6 +188,9 @@ class UserManager implements IUserManager {
         user.Password = data.password;
         user.FullName = data.fullName;
         user.Permission = data.permission as UserPermission;
+
+        // Path pushing
+        path.push(user);
         
         // Dependencies handling
         try {
