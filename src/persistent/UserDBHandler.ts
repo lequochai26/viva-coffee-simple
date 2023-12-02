@@ -1,5 +1,5 @@
 import { get, getAll, getByFilter, insert, remove, update } from "./DBHandler";
-import IUserDBHandler from "./IUserDBHandler";
+import IUserDBHandler from "./interfaces/IUserDBHandler";
 import { UserData, userDataPattern } from "./dtos/UserData";
 
 // Collection info:

@@ -1,5 +1,5 @@
 import { get, getAll, getByFilter, insert, remove, update } from "./DBHandler";
-import IOrderDBHandler from "./IOrderDBHandler";
+import IOrderDBHandler from "./interfaces/IOrderDBHandler";
 import { OrderData, orderDataPattern } from "./dtos/OrderData";
 
 // Collection info:

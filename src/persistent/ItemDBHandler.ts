@@ -1,5 +1,5 @@
 import { get, getAll, getByFilter, insert, remove, update } from "./DBHandler";
-import IItemDBHandler from "./IItemDBHandler";
+import IItemDBHandler from "./interfaces/IItemDBHandler";
 import { ItemData, itemDataPattern } from "./dtos/ItemData";
 
 // Collection info:
