@@ -26,8 +26,13 @@ class ItemManager implements IItemManager {
             throw error;
         }
 
-        // Converting
-        const result: Item[] = await this.multiDataToItem(itemsData, path);
+        // Try converting
+        try {
+            var result: Item[] = await this.multiDataToItem(itemsData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -42,8 +47,13 @@ class ItemManager implements IItemManager {
             throw error;
         }
 
-        // Converting
-        const result: Item[] = await this.multiDataToItem(itemsData, path);
+        // Try converting
+        try {
+            var result: Item[] = await this.multiDataToItem(itemsData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -63,8 +73,13 @@ class ItemManager implements IItemManager {
             return;
         }
 
-        // Converting
-        const item: Item = await this.dataToItem(itemData, path);
+        // Try converting
+        try {
+            var item: Item = await this.dataToItem(itemData, path);
+        }
+        catch (error: any) {
+            throw error;    
+        }
 
         // Return item
         return item;
@@ -142,7 +157,7 @@ class ItemManager implements IItemManager {
         async function typeHandling(type: string, item: Item, path: any[]): Promise<void> {
             try {
                 if (self.itemTypeManager) {
-                    item.Type = await self.itemTypeManager.get(type);
+                    item.Type = await self.itemTypeManager.get(type, path);
                 }
             }
             catch (error: any) {
@@ -182,11 +197,16 @@ class ItemManager implements IItemManager {
         item.Price = data.price;
         
         // Dependencies handling
-        if (data.type) {
-            await typeHandling(data.type, item, path);
+        try {
+            if (data.type) {
+                await typeHandling(data.type, item, path);
+            }
+    
+            await ordersHandling(item, path);
         }
-
-        await ordersHandling(item, path);
+        catch (error: any) {
+            throw error;
+        }
 
         // Return item
         return item;
@@ -197,8 +217,13 @@ class ItemManager implements IItemManager {
         const result: Item[] = [];
 
         // Converting
-        for (const itemData of data) {
-            result.push(await this.dataToItem(itemData, path));
+        try {
+            for (const itemData of data) {
+                result.push(await this.dataToItem(itemData, path));
+            }
+        }
+        catch (error: any) {
+            throw error;
         }
 
         // Return result
