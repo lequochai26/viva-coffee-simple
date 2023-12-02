@@ -195,6 +195,9 @@ class ItemManager implements IItemManager {
         item.Id = data.id;
         item.Name = data.name;
         item.Price = data.price;
+
+        // Path pushing
+        path.push(item);
         
         // Dependencies handling
         try {
