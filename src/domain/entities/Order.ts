@@ -1,17 +1,20 @@
 import OrderItem from "./OrderItem";
+import User from "./User";
 
 export default class Order {
     // Fields:
     private id?: string;
     private date?: Date;
     private totalPrice?: number;
+    private createdBy?: User;
     private items: OrderItem[];
 
     // Constructor:
-    public constructor(id?: string, date?: Date, totalPrice?: number, items?: OrderItem[]) {
+    public constructor(id?: string, date?: Date, totalPrice?: number, createdBy?: User, items?: OrderItem[]) {
         this.id = id;
         this.date = date;
         this.totalPrice = totalPrice;
+        this.createdBy = createdBy;
         this.items = (items || []);
     }
     
@@ -38,6 +41,14 @@ export default class Order {
 
     public set TotalPrice(totalPrice: number | undefined) {
         this.totalPrice = totalPrice;
+    }
+
+    public get CreatedBy(): User | undefined {
+        return this.createdBy;
+    }
+    
+    public set CreatedBy(createdBy: User | undefined) {
+        this.createdBy = createdBy;
     }
 
     public get Items(): OrderItem[] {
