@@ -2,7 +2,7 @@ export interface OrderData {
     id: string;
     date: Date;
     totalPrice: number;
-    createdBy: string;
+    createdBy?: string;
 }
 
 export const orderDataPattern: OrderData = {

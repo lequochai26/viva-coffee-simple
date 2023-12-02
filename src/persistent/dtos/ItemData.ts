@@ -2,7 +2,7 @@ export interface ItemData {
     id: string;
     name: string;
     price: number;
-    type: string
+    type?: string
 }
 
 export const itemDataPattern: ItemData = {
