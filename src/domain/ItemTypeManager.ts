@@ -23,8 +23,13 @@ class ItemTypeManager implements IItemTypeManager {
             throw error;
         }
 
-        // Converting
-        const result: ItemType[] = await this.multiDataToItemType(itemTypesData, path);
+        // Try converting
+        try {
+            var result: ItemType[] = await this.multiDataToItemType(itemTypesData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -39,8 +44,13 @@ class ItemTypeManager implements IItemTypeManager {
             throw error;
         }
 
-        // Converting
-        const result: ItemType[] = await this.multiDataToItemType(itemTypesData, path);
+        // Try converting
+        try {
+            var result: ItemType[] = await this.multiDataToItemType(itemTypesData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return result
         return result;
@@ -60,8 +70,13 @@ class ItemTypeManager implements IItemTypeManager {
             return;
         }
 
-        // Converting
-        const itemType: ItemType = await this.dataToItemType(itemTypeData, path);
+        // Try converting
+        try {
+            var itemType: ItemType = await this.dataToItemType(itemTypeData, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return item type
         return itemType;
@@ -167,7 +182,12 @@ class ItemTypeManager implements IItemTypeManager {
         itemType.Name = data.name;
 
         // Dependencies handling
-        await itemsHandling(itemType, path);
+        try {
+            await itemsHandling(itemType, path);
+        }
+        catch (error: any) {
+            throw error;
+        }
 
         // Return itemType
         return itemType;
@@ -178,8 +198,13 @@ class ItemTypeManager implements IItemTypeManager {
         const result: ItemType[] = [];
 
         // Converting
-        for (const itemTypeData of data) {
-            result.push(await this.dataToItemType(itemTypeData, path));
+        try {
+            for (const itemTypeData of data) {
+                result.push(await this.dataToItemType(itemTypeData, path));
+            }
+        }
+        catch (error: any) {
+            throw error;
         }
 
         // Return result
