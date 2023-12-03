@@ -1,1 +1,0 @@
-type ErrorOccurred = (error: any) => void;

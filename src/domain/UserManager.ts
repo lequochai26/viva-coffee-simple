@@ -1,10 +1,7 @@
 import { userDBHandler } from "@/persistent/DBHandlerCollection";
 import User, { UserPermission } from "./entities/User";
 import IOrderManager from "./interfaces/IOrderManager";
-import Converter from "./converters/types/Converter";
 import { UserData } from "@/persistent/dtos/UserData";
-import BeforeConverting from "./converters/types/BeforeConverting";
-import ConvertedSuccessful from "./converters/types/ConvertedSuccessful";
 import Order from "./entities/Order";
 import IUserManager from "./interfaces/IUserManager";
 
