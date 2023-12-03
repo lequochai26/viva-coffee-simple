@@ -1,0 +1,31 @@
+.widthFitContent {
+    width: fit-content;
+}
+
+.width350px {
+    width: 350px;
+}
+
+.width400px {
+    width: 400px;
+}
+
+.width500px {
+    width: 500px;
+}
+
+.widthFitParent {
+    width: 100%;
+}
+
+.width250px {
+    width: 250px;
+}
+
+.width200px {
+    width: 200px
+}
+
+.width275px {
+    width: 275px;
+}

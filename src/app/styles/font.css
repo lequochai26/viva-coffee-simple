@@ -1,0 +1,26 @@
+/* Font family */
+.fontFamilyInherit {
+    font-family: inherit;
+}
+
+/* Font size */
+.fontSize25px {
+    font-size: 25px;
+}
+
+.fontSizeInherit {
+    font-size: inherit;
+}
+
+.fontSize17px {
+    font-size: 17px;
+}
+
+.fontSize20px {
+    font-size: 20px;
+}
+
+/* Font weight */
+.fontWeightBold {
+    font-weight: bold;
+}

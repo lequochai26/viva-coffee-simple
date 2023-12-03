@@ -1,0 +1,31 @@
+.noMargin {
+    margin: 0px;
+}
+
+.margin5px {
+    margin: 5px;
+}
+
+.margin7px {
+    margin: 7px;
+}
+
+.margin10px {
+    margin: 10px;
+}
+
+.margin20px {
+    margin: 20px;
+}
+
+.margin25px {
+    margin: 25px;
+}
+
+.margin35px {
+    margin: 35px;
+}
+
+.marginLeft25px {
+    margin-left: 25px;
+}

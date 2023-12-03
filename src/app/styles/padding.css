@@ -1,0 +1,27 @@
+.noPadding {
+    padding: 0px;
+}
+
+.padding10px {
+    padding: 10px;
+}
+
+.padding5px {
+    padding: 5px;
+}
+
+.paddingLeft10px {
+    padding-left: 10px;
+}
+
+.paddingRight10px {
+    padding-right: 10px;
+}
+
+.paddingLeft25px {
+    padding-left: 25px;
+}
+
+.paddingRight25px {
+    padding-right: 25px;
+}

@@ -1,0 +1,11 @@
+.heightFitContent {
+    height: fit-content;
+}
+
+.heightFitParent {
+    height: 100%;
+}
+
+.height350px {
+    height: 350px;
+}
