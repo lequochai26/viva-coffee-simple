@@ -9,3 +9,7 @@
 .height350px {
     height: 350px;
 }
+
+.heightFitScreen {
+    height: 100vh;
+}

@@ -20,7 +20,15 @@
     font-size: 20px;
 }
 
+.fontSize15px {
+    font-size: 15px;
+}
+
 /* Font weight */
 .fontWeightBold {
     font-weight: bold;
+}
+
+.fontWeightNormal {
+    font-weight: normal;
 }

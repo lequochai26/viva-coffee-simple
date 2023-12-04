@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import { ReactNode } from "react";
+import { quicksand } from "./fonts";
+import './globals.css'
 
 // Metadata
 export const metadata: Metadata = {
@@ -14,8 +16,10 @@ export const metadata: Metadata = {
 function MainLayout({ children }: { children: ReactNode }) {
     return (
         <html>
-            <body>
-                {children}
+            <body className="noMargin noPadding">
+                <div className={`${quicksand.className} block widthFitParent heightFitScreen`}>
+                    {children}
+                </div>
             </body>
         </html>
     )
