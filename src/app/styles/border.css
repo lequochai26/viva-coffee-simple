@@ -5,3 +5,15 @@
 .borderRadius5px {
     border-radius: 5px;
 }
+
+.borderLeftNone {
+    border-left: none;
+}
+
+.borderRightNone {
+    border-right: none;
+}
+
+.borderTopNone {
+    border-top: none;
+}

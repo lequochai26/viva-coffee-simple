@@ -34,7 +34,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             success: true,
             user: {
                 username: user.Username,
-                fullName: user.FullName
+                fullName: user.FullName,
+                permission: user.Permission
             }
         }
     );

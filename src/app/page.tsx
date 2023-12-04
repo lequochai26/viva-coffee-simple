@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import { LoginPage } from "./components/LoginPage";
+import ManagementPage from "./components/ManagementPage";
+import User from "./interfaces/User";
 
 function App() {
     // States:
-    const [ user, setUser ] = useState<{username: string, fullName: string} | undefined>(undefined);
+    const [ user, setUser ] = useState<User | undefined>(undefined);
 
     // Event handlers:
-    async function onLogin(username: string, password: string): Promise<void> {
+    async function login(username: string, password: string): Promise<void> {
         try {
             // Sending HTTP request for logging-in
             var response: Response = await fetch(
@@ -42,13 +44,17 @@ function App() {
         }
     }
 
+    async function logout() {
+        setUser(undefined);
+    }
+
     // View:
     return (
         <div className="block widthFitParent heightFitParent">
             {
                 (!user)
-                ? <LoginPage onSubmit={onLogin} />
-                : <p>Hello, { user.fullName }</p>
+                ? <LoginPage onSubmit={login} />
+                : <ManagementPage user={user} onLogout={logout} />
             }
         </div>
     );

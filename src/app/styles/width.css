@@ -33,3 +33,11 @@
 .width135px {
     width: 135px;
 }
+
+.width150px {
+    width: 150px;
+}
+
+.widthInherit {
+    width: inherit;
+}

@@ -11,3 +11,7 @@
 @import 'styles/text.css';
 @import 'styles/position.css';
 @import 'styles/height.css';
+
+* {
+    box-sizing: border-box;
+}
