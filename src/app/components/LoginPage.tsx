@@ -4,20 +4,20 @@ import Button from "./Button";
 
 export type LoginOnSubmit = (username: string, password: string) => void;
 
-export interface LoginProps {
+export interface LoginPageProps {
     onSubmit?: LoginOnSubmit;
     message?: string;
     messageClassName?: string;
 }
 
-interface LoginFields {
+interface LoginFormFields {
     username?: string;
     password?: string;
 }
 
-export function Login(props: LoginProps) {
+export function LoginPage(props: LoginPageProps) {
     // States:
-    const [ fields, setFields ] = useState<LoginFields>({});
+    const [ fields, setFields ] = useState<LoginFormFields>({});
 
     // Event handlers:
     function onFieldChanged({ target }: any): void {

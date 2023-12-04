@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { Login } from "./components/Login";
+import { LoginPage } from "./components/LoginPage";
 
 function App() {
     // States:
@@ -47,7 +47,7 @@ function App() {
         <div className="block widthFitParent heightFitParent">
             {
                 (!user)
-                ? <Login onSubmit={onLogin} />
+                ? <LoginPage onSubmit={onLogin} />
                 : <p>Hello, { user.fullName }</p>
             }
         </div>
