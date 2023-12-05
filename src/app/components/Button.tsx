@@ -1,5 +1,5 @@
-interface ButtonProps {
-    type: "normal" | "submit";
+export interface ButtonProps {
+    type: "normal" | "normalInForm" | "submit";
     value: string;
     onClick?(): void;
     className?: string;
@@ -16,6 +16,10 @@ export default function Button({ type, value, onClick, className }: ButtonProps)
                 { value }
             </button>
         );
+
+        case 'normalInForm': return (
+            <input type="button" value={value} className={className} onClick={onClick} />
+        )
 
         case'submit': return (
             <input type="submit" value={value} className={className} />

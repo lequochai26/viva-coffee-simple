@@ -5,3 +5,15 @@
 .textAlignRight {
     text-align: right;
 }
+
+.textAlignLeft {
+    text-align: left;
+}
+
+.textAlignJustify {
+    text-align: justify;
+}
+
+.textColorRed {
+    color: red;
+}

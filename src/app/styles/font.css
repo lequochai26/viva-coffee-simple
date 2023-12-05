@@ -28,6 +28,10 @@
     font-size: 12px;
 }
 
+.fontSize8px {
+    font-size: 8px;
+}
+
 /* Font weight */
 .fontWeightBold {
     font-weight: bold;

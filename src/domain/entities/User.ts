@@ -11,10 +11,11 @@ export default class User {
     private createdOrders: Order[]
 
     // Constructor:
-    public constructor(username?: string, password?: string, fullName?: string, createdOrders?: Order[]) {
+    public constructor(username?: string, password?: string, fullName?: string, permission?: UserPermission, createdOrders?: Order[]) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.permission = permission;
         this.createdOrders = (createdOrders || []);
     }
 

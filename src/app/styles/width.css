@@ -2,16 +2,8 @@
     width: fit-content;
 }
 
-.width350px {
-    width: 350px;
-}
-
 .width400px {
     width: 400px;
-}
-
-.width500px {
-    width: 500px;
 }
 
 .widthFitParent {
@@ -40,4 +32,16 @@
 
 .widthInherit {
     width: inherit;
+}
+
+.width500px {
+    width: 500px;
+}
+
+.width350px {
+    width: 350px;
+}
+
+.widthFitScreen {
+    width: 100vw;
 }

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "./Button";
 import User from "../interfaces/User";
+import UserManagement from "./UserManagement";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -13,6 +14,7 @@ interface MenuBarProps {
     user: User;
     onLogout?(): void;
     show: boolean;
+    onUserManagementMenuClick?(): void;
 }
 
 interface UserAreaProps {
@@ -30,6 +32,7 @@ interface MenuItemProps {
 interface ContentAreaProps {
     menuBarShow: boolean;
     onMenuButtonClick?(): void;
+    viewPortContent: JSX.Element;
 }
 
 interface ContentAreaHeaderProps {
@@ -45,26 +48,35 @@ interface ContentAreaViewPortProps {
 export default function ManagementPage({ user, onLogout }: ManagementPageProps) {
     // States:
     const [ showMenuBar, setShowMenuBar ] = useState<boolean>(true);
+    const [ viewPortContent, setViewPortContent ] = useState<JSX.Element>(
+        <DefaultContentAreaViewPortContent />
+    );
 
     // Event handlers:
     function swapShowMenuBar() {
         setShowMenuBar(!showMenuBar);
     }
 
+    function showUserManagement() {
+        setViewPortContent(
+            <UserManagement />
+        );
+    }
+
     // View:
     return (
         <div className="block widthFitParent heightFitParent">
             {/* Menu bar */}
-            <MenuBar user={user} onLogout={onLogout} show={showMenuBar} />
+            <MenuBar user={user} onLogout={onLogout} show={showMenuBar} onUserManagementMenuClick={showUserManagement} />
 
             {/* Content area */}
-            <ContentArea menuBarShow={showMenuBar} onMenuButtonClick={swapShowMenuBar} />
+            <ContentArea menuBarShow={showMenuBar} viewPortContent={ viewPortContent } onMenuButtonClick={swapShowMenuBar} />
         </div>
     )
 }
 
 // Components:
-function MenuBar({ user, onLogout, show }: MenuBarProps) {
+function MenuBar({ user, onLogout, show, onUserManagementMenuClick }: MenuBarProps) {
     // View:
     return (
         <div className={`${show ? "inlineBlock": "none"} width200px heightFitParent borderBlackThin verticalAlignTop`}>
@@ -75,7 +87,7 @@ function MenuBar({ user, onLogout, show }: MenuBarProps) {
             {
                 user.permission === "ADMIN"
                 &&
-                <MenuItem iconSrc="/user.png" title="Quản lý người dùng" />
+                <MenuItem iconSrc="/user.png" title="Quản lý người dùng" onClick={onUserManagementMenuClick} />
             }
 
             <MenuItem iconSrc="/coffee.png" title="Quản lý sản phẩm" className={user.permission === "ADMIN" ? "borderTopNone": ""} />
@@ -169,7 +181,7 @@ function MenuItem({ iconSrc, title, onClick, className }: MenuItemProps) {
     )
 }
 
-function ContentArea({ menuBarShow, onMenuButtonClick }: ContentAreaProps) {
+function ContentArea({ menuBarShow, viewPortContent, onMenuButtonClick }: ContentAreaProps) {
     // View:
     return (
         <div className="inlineBlock heightFitParent verticalAlignTop" style={{ width: (menuBarShow ? 'calc(100% - 200px)' : "100%") }}>
@@ -178,11 +190,7 @@ function ContentArea({ menuBarShow, onMenuButtonClick }: ContentAreaProps) {
 
             {/* Viewport */}
             <ContentAreaViewPort
-                content={
-                    <div>
-                        <h1>Hello World!</h1>       
-                    </div>
-                }
+                content={viewPortContent}
             />
         </div>
     );
@@ -202,8 +210,32 @@ function ContentAreaHeader({ menuBarShow, onMenuButtonClick }: ContentAreaHeader
 
 function ContentAreaViewPort({ content }: ContentAreaViewPortProps) {
     return (
-        <>
+        <div className="block widthFitParent" style={{ height: 'calc(100% - 50px)' }}>
             { content }
-        </>
+        </div>
+    )
+}
+
+function DefaultContentAreaViewPortContent() {
+    return (
+        <div className="widthFitParent heightFitParent textAlignCenter">
+            {/* Ruler */}
+            <div className="ruler"></div>
+
+            {/* Content */}
+            <div className="inlineBlock widthFitParent heightFitContent verticalAlignMiddle">
+                <h1 className="fontWeightNormal">
+                    Xin chào!
+                </h1>
+
+                <p>
+                    Vui lòng chọn vào một trong các menu bên trái để truy cập đến giao diện quản lý mong muốn.
+                </p>
+
+                <p>
+                    Chúc bạn có ngày làm việc vui vẻ và tràn đầy năng lượng
+                </p>
+            </div>
+        </div>
     )
 }
