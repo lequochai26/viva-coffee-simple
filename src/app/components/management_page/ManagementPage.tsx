@@ -6,6 +6,8 @@ import UserManagement from "../usermanagement_page/UserManagement";
 import DefaultContentAreaViewPortContent from "./DefaultContentAreaViewPortContent";
 import MenuBar from "./menubar/MenuBar";
 import ContentArea from "./content_area/ContentArea";
+import ManagementPanel from "../management_panel/ManagementPanel";
+import UserDataRow from "./interfaces/UserDataRow";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -13,12 +15,27 @@ interface ManagementPageProps {
     onLogout?(): void;
 }
 
-// Main component::
+// Main component:
 export default function ManagementPage({ user, onLogout }: ManagementPageProps) {
     // States:
     const [ showMenuBar, setShowMenuBar ] = useState<boolean>(true);
     const [ viewPortContent, setViewPortContent ] = useState<JSX.Element>(
-        <DefaultContentAreaViewPortContent />
+        <ManagementPanel<UserDataRow>
+            config={
+                {
+                    routeHandler: "/management/user2",
+                    table: {
+                        columns: [
+                            ["username", "Tên người dùng"],
+                            ["fullName", "Họ và tên"],
+                            ["permission", "Quyền"]
+                        ]
+                    }
+                }
+            }
+            AddScreen={undefined}
+            EditScreen={undefined}
+        />
     );
 
     // Event handlers:
