@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { LoginPage } from "./components/LoginPage";
-import ManagementPage from "./components/ManagementPage";
+import ManagementPage from "./components/management_page/ManagementPage";
 import User from "./interfaces/User";
 
 function App() {
