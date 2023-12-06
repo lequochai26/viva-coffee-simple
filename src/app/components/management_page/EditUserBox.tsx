@@ -3,21 +3,22 @@ import { useState } from "react";
 import InputField from "../InputField";
 import SelectField from "../SelectField";
 import Button from "../Button";
+import EntityAlterScreenProps from "../management_panel/interfaces/EntityAlterScreenProps";
 
 // Info:
 const routeHandler: string = "/management/user2";
 
-// Interfaces:
-interface EditUserBoxProps {
-    target: User;
-    onAlter(): void;
-    close(): void;
-}
-
 // Main component:
-export default function EditUserBox({ target, onAlter, close }: EditUserBoxProps) {
+export default function EditUserBox({ target, onAlter, close }: EntityAlterScreenProps<User>) {
     // States:
-    const [ fields, setFields ] = useState<User>({ username: target.username, password: target.password, fullName: target.fullName, permission: target.permission });
+    const [ fields, setFields ] = useState<User>(
+        {
+            username: (target as User).username,
+            password: (target as User).password,
+            fullName: (target as User).fullName,
+            permission: (target as User).permission
+        }
+    );
     const [ message, setMessage ] = useState<string | undefined>(undefined);
 
     // Event handlers:
