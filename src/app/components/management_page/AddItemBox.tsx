@@ -54,8 +54,11 @@ export default function AddItemBox({ onAlter, close }: EntityAlterScreenProps<It
                     else {
                         setItemTypes(
                             body.result.map(
-                                function (itemType: ItemType) {
-                                    return [itemType.id, itemType.name]
+                                function (itemType: ItemType, index: number) {
+                                    if (index === 0) {
+                                        setFields({ ...fields, typeId: itemType.id });
+                                    }
+                                    return [itemType.id, itemType.name];
                                 }
                             )
                         );
