@@ -68,6 +68,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                     }
                 )
             }
+
+            default: return NextResponse.json(
+                { success: false, message: "Phương thức truy vấn không hợp lệ!" }
+            );
         }
     }
     catch (error: any) {
