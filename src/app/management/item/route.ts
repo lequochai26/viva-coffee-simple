@@ -1,5 +1,6 @@
-import { itemManager } from "@/domain/EntityManagerCollection";
+import { itemManager, itemTypeManager } from "@/domain/EntityManagerCollection";
 import Item from "@/domain/entities/Item";
+import ItemType from "@/domain/entities/ItemType";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -110,6 +111,63 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
         await itemManager.remove(item);
 
         // Success responsding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target field of body
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần thêm!" }
+            );
+        }
+
+        // Destruct target
+        const { id, name, price, typeId }: any = target;
+
+        // Item already exist case
+        if (await itemManager.get(id, [])) {
+            return NextResponse.json(
+                { success: false, message: `Sản phẩm với mã "${id}" đã tồn tại trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Get item type entity with given typeId
+        const itemType: ItemType | undefined = await itemTypeManager.get(typeId, []);
+
+        // Item type not exist case
+        if (!itemType) {
+            return NextResponse.json(
+                { success: false, message: `Không tìm thấy loại sản phẩm với mã "${typeId}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Create new item entity
+        const item: Item = new Item();
+        item.Id = id;
+        item.Name = name;
+        item.Price = price;
+        item.Type = itemType;
+
+        // Try inserting item entity into db
+        await itemManager.insert(item);
+
+        // Success responding
         return NextResponse.json(
             { success: true }
         );
