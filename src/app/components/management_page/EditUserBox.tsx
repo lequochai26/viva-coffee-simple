@@ -94,7 +94,7 @@ export default function EditUserBox({ target, onAlter, close }: EntityAlterScree
                 {/* Message displaying area */}
                 {
                     message && (
-                        <p className="textColorRed">
+                        <p className="textColorRed width200px heightFitContent fontSize12px">
                             { message }
                         </p>
                     )
