@@ -14,12 +14,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             );
         }
 
+        // Get sender
+        const sender: string | null = request.nextUrl.searchParams.get("sender");
+
         switch (getMethod) {
             // Get all case
             case 'GETALL': return NextResponse.json(
                 {
                     success: true,
-                    result: (await userManager.getAll([])).map(
+                    result: (await userManager.getAll([])).filter(
+                        function (user: User) {
+                            if (user.Username !== sender) {
+                                return user;
+                            }
+                        }
+                    ).map(
                         function (user: User) {
                             return {
                                 username: user.Username,
@@ -56,7 +65,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                             }
                         ).filter(
                             function (user) {
-                                if (`${user.username} ${user.fullName} ${user.permission}`.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                                if (`${user.username} ${user.fullName} ${user.permission}`.toLowerCase().indexOf(keyword.toLowerCase()) !== -1 && user.username !== sender) {
                                     return user;
                                 }
                             }
