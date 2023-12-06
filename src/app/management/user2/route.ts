@@ -119,3 +119,96 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
         );
     }
 }
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target from body
+        const target: any = body.target;
+
+        // Target not found in request's body
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần thêm!" }
+            )
+        }
+
+        // Destruct target's info
+        const { username, password, fullName, permission }: any = target;
+
+        // User already exist case
+        if (await userManager.get(username, [])) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: `Đã có tài khoản với tên người dùng "${username}" tồn tại trong cơ sở dữ liệu hệ thống!`
+                }
+            );
+        }
+
+        // Create new user based on given information
+        const user: User = new User();
+        user.Username = username;
+        user.Password = password;
+        user.FullName = fullName;
+        user.Permission = permission;
+
+        // Insert user into db
+        await userManager.insert(user);
+
+        // Success
+        return NextResponse.json({ success: true });
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.tostring() }
+        );
+    }
+}
+
+export async function PUT(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target from body
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần chỉnh sửa!" }
+            );
+        }
+
+        // Destruct target
+        const { username, fullName, permission }: any = target;
+
+        // Get user with given username
+        const user: User | undefined = await userManager.get(username, []);
+
+        // User not exist case
+        if (!user) {
+            return NextResponse.json(
+                { success: false, message: `Không tồn tại tài khoản với tên người dùng "${username}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Updating user's info
+        user.FullName = fullName;
+        user.Permission = permission;
+
+        // Updating user into db
+        await userManager.update(user);
+
+        // Success responding
+        return NextResponse.json({ success: true });
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}

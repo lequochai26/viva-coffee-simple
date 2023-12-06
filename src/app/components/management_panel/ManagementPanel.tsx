@@ -244,7 +244,7 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
                 <Header keyword={searchKeyword} onAdd={showAddScreen} onDelete={deleteSelected} onReload={load} onKeywordChange={onSearchKeywordChange} onSearch={loadByKeyword} />
 
                 {/* Table */}
-                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} />
+                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} onEdit={showEditScreen} />
             </div>
         </>
     );

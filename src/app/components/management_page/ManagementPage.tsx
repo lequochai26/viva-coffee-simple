@@ -8,6 +8,8 @@ import MenuBar from "./menubar/MenuBar";
 import ContentArea from "./content_area/ContentArea";
 import ManagementPanel from "../management_panel/ManagementPanel";
 import UserDataRow from "./interfaces/UserDataRow";
+import AddUserBox from "./AddUserBox";
+import EditUserBox from "./EditUserBox";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -33,8 +35,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                     }
                 }
             }
-            AddScreen={undefined}
-            EditScreen={undefined}
+            AddScreen={AddUserBox}
+            EditScreen={EditUserBox}
         />
     );
 
