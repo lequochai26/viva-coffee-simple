@@ -11,6 +11,7 @@ import UserDataRow from "./interfaces/UserDataRow";
 import AddUserBox from "./AddUserBox";
 import EditUserBox from "./EditUserBox";
 import ItemDataRow from "./interfaces/ItemDataRow";
+import AddItemBox from "./AddItemBox";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -70,7 +71,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                         }
                     }
                 }
-                AddScreen={undefined}
+                AddScreen={AddItemBox}
                 EditScreen={undefined}
                 user={user}
             />
