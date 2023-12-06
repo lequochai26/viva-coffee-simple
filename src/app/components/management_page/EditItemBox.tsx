@@ -78,9 +78,9 @@ export default function EditItemBox({ target, onAlter, close }: EntityAlterScree
         setFields({ ...fields, [target.name]: target.value });
     }
 
-    async function onSubmit({ preventDefault }: any) {
+    async function onSubmit(event: any) {
         // Default preventing
-        preventDefault();
+        event.preventDefault();
 
         try {
             // Sending HTTP request and receiving response
