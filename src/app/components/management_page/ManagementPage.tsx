@@ -10,6 +10,7 @@ import ManagementPanel from "../management_panel/ManagementPanel";
 import UserDataRow from "./interfaces/UserDataRow";
 import AddUserBox from "./AddUserBox";
 import EditUserBox from "./EditUserBox";
+import ItemDataRow from "./interfaces/ItemDataRow";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -33,6 +34,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
     function showUserManagement() {
         setViewPortContent(
             <ManagementPanel<UserDataRow>
+                key="userManagementPanel"
                 config={
                     {
                         routeHandler: "/management/user2",
@@ -52,11 +54,34 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
         );
     }
 
+    function showItemManagement() {
+        setViewPortContent(
+            <ManagementPanel<ItemDataRow>
+                key="itemManagementPanel"
+                config={
+                    {
+                        routeHandler: "/management/item",
+                        table: {
+                            columns: [
+                                ["id", "Mã"],
+                                ["name", "Tên"],
+                                ["typeName", "Loại"]
+                            ]
+                        }
+                    }
+                }
+                AddScreen={undefined}
+                EditScreen={undefined}
+                user={user}
+            />
+        );
+    }
+
     // View:
     return (
         <div className="block widthFitParent heightFitParent">
             {/* Menu bar */}
-            <MenuBar user={user} onLogout={onLogout} show={showMenuBar} onUserManagementMenuClick={showUserManagement} />
+            <MenuBar user={user} onLogout={onLogout} show={showMenuBar} onUserManagementMenuClick={showUserManagement} onItemManagementMenuClick={showItemManagement} />
 
             {/* Content area */}
             <ContentArea menuBarShow={showMenuBar} viewPortContent={ viewPortContent } onMenuButtonClick={swapShowMenuBar} />
