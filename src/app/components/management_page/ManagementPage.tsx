@@ -47,6 +47,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 }
                 AddScreen={AddUserBox}
                 EditScreen={EditUserBox}
+                user={user}
             />
         );
     }

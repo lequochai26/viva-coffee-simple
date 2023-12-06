@@ -3,6 +3,7 @@ import FixedScreen from "../FixedScreen";
 import Header from "./Header";
 import DataRow from "./interfaces/DataRow";
 import DataTable from "./data_table/DataTable";
+import User from "@/app/interfaces/User";
 
 // Interfaces:
 interface ManagementPanelProps<T> {
@@ -14,10 +15,11 @@ interface ManagementPanelProps<T> {
     };
     AddScreen: any;
     EditScreen: any;
+    user: User;
 }
 
 // Main component:
-export default function ManagementPanel<T extends DataRow>({ config, AddScreen, EditScreen }: ManagementPanelProps<T>) {
+export default function ManagementPanel<T extends DataRow>({ config, AddScreen, EditScreen, user }: ManagementPanelProps<T>) {
     // States:
     const [ fixedScreenContent, setFixedScreenContent ] = useState<JSX.Element | undefined>(undefined);
     const [ data, setData ] = useState<T[]>([]);
@@ -29,7 +31,7 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
         try {
             // Try sending HTTP request and attempt to receive response
             const response: Response = await fetch(
-                config.routeHandler,
+                `${config.routeHandler}?sender=${user.username}`,
                 {
                     method: "GET",
                     headers: [
@@ -66,7 +68,7 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
          try {
             // Sending HTTP request and receiving response
             const response: Response = await fetch(
-                `${config.routeHandler}?keyword=${searchKeyword}`,
+                `${config.routeHandler}?sender=${user.username}&keyword=${searchKeyword}`,
                 {
                     method: "GET",
                     headers: [
