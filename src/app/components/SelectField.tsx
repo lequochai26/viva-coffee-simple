@@ -1,6 +1,6 @@
 interface SelectFieldProps {
     name: string;
-    value: string[];
+    value: (string | [string, string])[];
     selecting?: string;
     onChange?(event: any): void;
     placeholder?: string;
@@ -16,12 +16,21 @@ export default function SelectField({ name, value, selecting, onChange, placehol
         <select name={name} value={selecting} onChange={onChange} placeholder={placeholder} className={className}>
             {
                 value.map(
-                    function (str: string, index: number) {
-                        return (
-                            <option key={index} value={str}>
-                                {str}
-                            </option>
-                        )
+                    function (val: string | [string, string], index: number) {
+                        if (typeof val === "string") {
+                            return (
+                                <option key={index} value={val}>
+                                    { val }
+                                </option>
+                            );
+                        }
+                        else {
+                            return (
+                                <option key={index} value={val[0]}>
+                                    {val[1]}
+                                </option>
+                            )
+                        }
                     }
                 )
             }
