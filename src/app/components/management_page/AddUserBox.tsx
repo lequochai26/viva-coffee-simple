@@ -3,18 +3,13 @@ import InputField from "../InputField";
 import SelectField from "../SelectField";
 import Button from "../Button";
 import User from "@/app/interfaces/User";
+import EntityAlterScreenProps from "../management_panel/interfaces/EntityAlterScreenProps";
 
 // Info:
 const routeHandler: string = "/management/user2";
 
-// Interfaces:
-interface AddUserBoxProps {
-    onAlter(): void;
-    close(): void;
-}
-
 // Main component:
-export default function AddUserBox({ onAlter, close }: AddUserBoxProps) {
+export default function AddUserBox({ onAlter, close }: EntityAlterScreenProps<User>) {
     // States:
     const [ fields, setFields ] = useState<User>({username: "", password: "", fullName: "", permission: "EMPLOYEE" });
     const [ message, setMessage ] = useState<string | undefined>(undefined);
