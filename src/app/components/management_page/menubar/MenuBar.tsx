@@ -8,10 +8,13 @@ interface MenuBarProps {
     onLogout?(): void;
     show: boolean;
     onUserManagementMenuClick?(): void;
+    onItemManagementMenuClick?(): void;
+    onItemTypeManagementMenuClick?(): void;
+    onOrderManagementMenuClick?(): void;
 }
 
 // Main component:
-export default function MenuBar({ user, onLogout, show, onUserManagementMenuClick }: MenuBarProps) {
+export default function MenuBar({ user, onLogout, show, onUserManagementMenuClick, onItemManagementMenuClick, onItemTypeManagementMenuClick, onOrderManagementMenuClick }: MenuBarProps) {
     // View:
     return (
         <div className={`${show ? "inlineBlock": "none"} width200px heightFitParent borderBlackThin verticalAlignTop`}>
@@ -22,14 +25,18 @@ export default function MenuBar({ user, onLogout, show, onUserManagementMenuClic
             {
                 user.permission === "ADMIN"
                 &&
-                <MenuItem iconSrc="/user.png" title="Quản lý người dùng" onClick={onUserManagementMenuClick} />
+                (
+                    <>
+                        <MenuItem iconSrc="/user.png" title="Quản lý người dùng" onClick={onUserManagementMenuClick} />
+
+                        <MenuItem iconSrc="/coffee.png" title="Quản lý sản phẩm" className="borderTopNone" onClick={onItemManagementMenuClick} />
+
+                        <MenuItem iconSrc="/item-type.png" title="Quản lý loại sản phẩm" className="borderTopNone" onClick={onItemTypeManagementMenuClick} />
+                    </>
+                )
             }
 
-            <MenuItem iconSrc="/coffee.png" title="Quản lý sản phẩm" className={user.permission === "ADMIN" ? "borderTopNone": ""} />
-
-            <MenuItem iconSrc="/item-type.png" title="Quản lý loại sản phẩm" className="borderTopNone" />
-
-            <MenuItem iconSrc="/order.png" title="Quản lý đơn hàng" className="borderTopNone" />
+            <MenuItem iconSrc="/order.png" title="Quản lý đơn hàng" className={user.permission === "ADMIN" ? "borderTopNone" : ""} onClick={onOrderManagementMenuClick} />
         </div>
     )
 }
