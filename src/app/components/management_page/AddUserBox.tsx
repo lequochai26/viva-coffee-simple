@@ -99,7 +99,7 @@ export default function AddUserBox({ onAlter, close }: EntityAlterScreenProps<Us
                 {
                     message
                     && (
-                        <p className="textColorRed">
+                        <p className="textColorRed width200px heightFitContent textAlignJustify fontSize12px">
                             { message }
                         </p>
                     )
