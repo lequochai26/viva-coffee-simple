@@ -35,6 +35,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             user: {
                 username: user.Username,
                 fullName: user.FullName,
+                password: user.Password,
                 permission: user.Permission
             }
         }
