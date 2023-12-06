@@ -80,3 +80,43 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         );
     }
 }
+
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parse request's body into json
+        const body: any = await request.json();
+
+        // Get target from body
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần xóa" }
+            );
+        }
+
+        // Get item entity based on target's id field
+        const item: Item | undefined = await itemManager.get(target.id, []);
+
+        // Target not found in db
+        if (!item) {
+            return NextResponse.json(
+                { success: false, message: `Không tìm thấy sản phẩm với mã "${target.id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Removing item from db
+        await itemManager.remove(item);
+
+        // Success responsding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
