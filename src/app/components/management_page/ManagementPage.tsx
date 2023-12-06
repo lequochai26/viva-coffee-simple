@@ -22,22 +22,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
     // States:
     const [ showMenuBar, setShowMenuBar ] = useState<boolean>(true);
     const [ viewPortContent, setViewPortContent ] = useState<JSX.Element>(
-        <ManagementPanel<UserDataRow>
-            config={
-                {
-                    routeHandler: "/management/user2",
-                    table: {
-                        columns: [
-                            ["username", "Tên người dùng"],
-                            ["fullName", "Họ và tên"],
-                            ["permission", "Quyền"]
-                        ]
-                    }
-                }
-            }
-            AddScreen={AddUserBox}
-            EditScreen={EditUserBox}
-        />
+        <DefaultContentAreaViewPortContent />
     );
 
     // Event handlers:
@@ -47,7 +32,22 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
 
     function showUserManagement() {
         setViewPortContent(
-            <UserManagement />
+            <ManagementPanel<UserDataRow>
+                config={
+                    {
+                        routeHandler: "/management/user2",
+                        table: {
+                            columns: [
+                                ["username", "Tên người dùng"],
+                                ["fullName", "Họ và tên"],
+                                ["permission", "Quyền"]
+                            ]
+                        }
+                    }
+                }
+                AddScreen={AddUserBox}
+                EditScreen={EditUserBox}
+            />
         );
     }
 
