@@ -178,3 +178,61 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         );
     }
 }
+
+export async function PUT(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target from body
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần chỉnh sửa!" }
+            );
+        }
+
+        // Get item entity base on target's id field
+        const item: Item | undefined = await itemManager.get(target.id, []);
+
+        // Item entity not exist case
+        if (!item) {
+            return NextResponse.json(
+                { success: false, message: `Không tồn tại sản phẩm với mã "${target.id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Updating item's fields
+        item.Name = target.name;
+        item.Price = target.price;
+
+        // Item type relationship changed
+        if (item.Type?.Id !== target.typeId) {
+            // Get item type with target's typeId field
+            const itemType: ItemType | undefined = await itemTypeManager.get(target.typeId, []);
+
+            // Item type not exist
+            if (!itemType) {
+                return NextResponse.json(
+                    { success: false, message: `Không tồn tại loại sản phẩm với mã "${target.typeId}" trong cơ sở dữ liệu hệ thống!` }
+                );
+            }
+
+            // Updating type field for item
+            item.Type = itemType;
+        }
+
+        // Updating item into db
+        itemManager.update(item);
+
+        // Success responding
+        return NextResponse.json({ success: true });
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
