@@ -14,6 +14,7 @@ import ItemDataRow from "./interfaces/ItemDataRow";
 import AddItemBox from "./AddItemBox";
 import EditItemBox from "./EditItemBox";
 import ItemTypeDataRow from "./interfaces/ItemTypeDataRow";
+import AddItemTypeBox from "./AddItemTypeBox";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -96,7 +97,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                         }
                     }
                 }
-                AddScreen={undefined}
+                AddScreen={AddItemTypeBox}
                 EditScreen={undefined}
                 user={user}
             />
