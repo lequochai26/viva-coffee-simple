@@ -12,14 +12,17 @@ interface ManagementPanelProps<T> {
         table: {
             columns: [keyof T, string][];
         }
+        editable: boolean;
+        viewable: boolean;
     };
     AddScreen: any;
     EditScreen: any;
+    ViewScreen: any;
     user: User;
 }
 
 // Main component:
-export default function ManagementPanel<T extends DataRow>({ config, AddScreen, EditScreen, user }: ManagementPanelProps<T>) {
+export default function ManagementPanel<T extends DataRow>({ config, AddScreen, EditScreen, ViewScreen, user }: ManagementPanelProps<T>) {
     // States:
     const [ fixedScreenContent, setFixedScreenContent ] = useState<JSX.Element | undefined>(undefined);
     const [ data, setData ] = useState<T[]>([]);
@@ -195,6 +198,12 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
         );
     }
 
+    function showViewScreen(index: number): void {
+        setFixedScreenContent(
+            <ViewScreen user={user} target={data[index]} onAlter={load} close={closeFixedScreen} />
+        );
+    }
+
     // Event handlers:
     function onSearchKeywordChange({ target }: any): void {
         setSearchKeyword(target.value);
@@ -246,7 +255,7 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
                 <Header keyword={searchKeyword} onAdd={showAddScreen} onDelete={deleteSelected} onReload={load} onKeywordChange={onSearchKeywordChange} onSearch={loadByKeyword} />
 
                 {/* Table */}
-                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} onEdit={showEditScreen} />
+                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} editable={config.editable} viewable={config.viewable} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} onEdit={showEditScreen} onView={showViewScreen} />
             </div>
         </>
     );

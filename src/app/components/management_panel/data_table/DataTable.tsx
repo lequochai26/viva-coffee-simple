@@ -6,16 +6,19 @@ interface DataTableProps<T extends DataRow> {
     tableConfig: {
         columns: [keyof T, string][];
     };
+    editable: boolean;
+    viewable: boolean;
     data: T[];
     selectAll: boolean;
     onSelectAll?(): void;
     onSelect?(index: number): void;
     onEdit?(index: number): void;
     onDelete?(index: number): void;
+    onView?(index: number): void;
 }
 
 // Main component:
-export default function DataTable<T extends DataRow>({ tableConfig, data, selectAll, onSelectAll, onSelect, onEdit, onDelete }: DataTableProps<T>) {
+export default function DataTable<T extends DataRow>({ tableConfig, editable, viewable, data, selectAll, onSelectAll, onSelect, onEdit, onDelete, onView }: DataTableProps<T>) {
     // View:
     return (
         <table className="widthFitParent heightFitContent fontSize12px">
@@ -80,7 +83,18 @@ export default function DataTable<T extends DataRow>({ tableConfig, data, select
                                     {/* Operation buttons */}
                                     <td className="textAlignRight">
                                         {/* Edit button */}
-                                        <Button type="normal" value="Sửa" onClick={onEdit && function() {onEdit(index)}} className="inlineBlock fontSize12px margin5px" />
+                                        {
+                                            editable && (
+                                                <Button type="normal" value="Sửa" onClick={onEdit && function() {onEdit(index)}} className="inlineBlock fontSize12px margin5px" />
+                                            )
+                                        }
+
+                                        {/* View button */}
+                                        {
+                                            viewable && (
+                                                <Button type="normal" value="Chi tiết" onClick={onView && function() {onView(index)}} className="inlineBlock fontSize12px margin5px" />
+                                            )
+                                        }
                                         
                                         {/* Delete button */}
                                         <Button type="normal" value="Xóa" onClick={onDelete && function() {onDelete(index)}} className="inlineBlock fontSize12px margin5px" />

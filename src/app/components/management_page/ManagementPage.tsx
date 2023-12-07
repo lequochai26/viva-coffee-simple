@@ -50,11 +50,14 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                                 ["fullName", "Họ và tên"],
                                 ["permission", "Quyền"]
                             ]
-                        }
+                        },
+                        editable: true,
+                        viewable: false
                     }
                 }
                 AddScreen={AddUserBox}
                 EditScreen={EditUserBox}
+                ViewScreen={undefined}
                 user={user}
             />
         );
@@ -74,11 +77,14 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                                 ["typeName", "Loại"],
                                 ["price", "Đơn giá"]
                             ]
-                        }
+                        },
+                        editable: true,
+                        viewable: false
                     }
                 }
                 AddScreen={AddItemBox}
                 EditScreen={EditItemBox}
+                ViewScreen={undefined}
                 user={user}
             />
         );
@@ -96,11 +102,14 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                                 ["id", "Mã loại sản phẩm"],
                                 ["name", "Tên loại sản phẩm"]
                             ]
-                        }
+                        },
+                        editable: true,
+                        viewable: false
                     }
                 }
                 AddScreen={AddItemTypeBox}
                 EditScreen={EditItemTypeBox}
+                ViewScreen={undefined}
                 user={user}
             />
         );
@@ -120,11 +129,14 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                                 ["totalPrice", "Tổng thành tiền"],
                                 ["createdByFullName", "Lập bởi"]
                             ]
-                        }
+                        },
+                        editable: false,
+                        viewable: true
                     }
                 }
                 AddScreen={undefined}
                 EditScreen={undefined}
+                ViewScreen={undefined}
                 user={user}
             />
         );
