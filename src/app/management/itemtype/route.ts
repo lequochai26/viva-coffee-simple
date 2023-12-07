@@ -1,4 +1,4 @@
-import { itemTypeManager } from "@/domain/EntityManagerCollection";
+import { itemManager, itemTypeManager } from "@/domain/EntityManagerCollection";
 import ItemType from "@/domain/entities/ItemType";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -67,6 +67,52 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 { success: false, message: "Phương thức truy vấn không hợp lệ!" }
             );
         }
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
+
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const { target }: any = await request.json();
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần xóa!" }
+            );
+        }
+
+        // Destruct target
+        const { id }: any = target;
+
+        // Get item type entity with give id
+        const itemType: ItemType | undefined = await itemTypeManager.get(id, []);
+
+        // Target item type entity not found in db case
+        if (!itemType) {
+            return NextResponse.json(
+                { success: false, message: `Không tìm thấy loại sản phẩm với mã "${id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Unlink all Items linked with this item type entity
+        for (const item of itemType.Items) {
+            item.Type = undefined;
+            await itemManager.update(item);
+        }
+
+        // Removing item type entity
+        await itemTypeManager.remove(itemType);
+
+        // Success responding
+        return NextResponse.json(
+            { success: true }
+        );
     }
     catch (error: any) {
         return NextResponse.json(
