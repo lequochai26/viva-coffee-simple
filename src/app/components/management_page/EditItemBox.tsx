@@ -52,7 +52,12 @@ export default function EditItemBox({ target, onAlter, close }: EntityAlterScree
                     else {
                         setItemTypes(
                             result.map(
-                                function (itemType: ItemType) {
+                                function (itemType: ItemType, index: number) {
+                                    if (!fields.typeId) {
+                                        if (index === 0) {
+                                            setFields({ ...fields, typeId: itemType.id })
+                                        }
+                                    }
                                     return [ itemType.id, itemType.name ];
                                 }
                             )
