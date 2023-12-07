@@ -67,7 +67,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                             columns: [
                                 ["id", "Mã"],
                                 ["name", "Tên"],
-                                ["typeName", "Loại"]
+                                ["typeName", "Loại"],
+                                ["price", "Đơn giá"]
                             ]
                         }
                     }
