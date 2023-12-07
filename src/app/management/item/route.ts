@@ -1,4 +1,4 @@
-import { itemManager, itemTypeManager } from "@/domain/EntityManagerCollection";
+import { itemManager, itemTypeManager, orderItemManager } from "@/domain/EntityManagerCollection";
 import Item from "@/domain/entities/Item";
 import ItemType from "@/domain/entities/ItemType";
 import { NextRequest, NextResponse } from "next/server";
@@ -105,6 +105,11 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
             return NextResponse.json(
                 { success: false, message: `Không tìm thấy sản phẩm với mã "${target.id}" trong cơ sở dữ liệu hệ thống!` }
             );
+        }
+
+        // Removing order item entities that linked with this item
+        for (const orderItem of item.Orders) {
+            await orderItemManager.remove(orderItem);
         }
 
         // Removing item from db
