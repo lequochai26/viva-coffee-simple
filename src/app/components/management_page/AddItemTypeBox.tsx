@@ -46,7 +46,7 @@ export default function AddItemTypeBox({ onAlter, close }: EntityAlterScreenProp
 
             // Failed case
             if (!success) {
-                alert(message);
+                setMessage(message);
             }
             // Success case
             else {
@@ -88,6 +88,15 @@ export default function AddItemTypeBox({ onAlter, close }: EntityAlterScreenProp
                     {/* Add button */}
                     <Button type="submit" value="Thêm" className="margin5px" />
                 </p>
+
+                {/* Message displaying area */}
+                {
+                    message && (
+                        <p className="width200px heightFitContent textColorRed fontSize12px textAlignJustify">
+                            { message }
+                        </p>
+                    )
+                }
 
             </form>
 
