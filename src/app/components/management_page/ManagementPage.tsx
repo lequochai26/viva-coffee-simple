@@ -13,6 +13,7 @@ import EditUserBox from "./EditUserBox";
 import ItemDataRow from "./interfaces/ItemDataRow";
 import AddItemBox from "./AddItemBox";
 import EditItemBox from "./EditItemBox";
+import ItemTypeDataRow from "./interfaces/ItemTypeDataRow";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -80,11 +81,40 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
         );
     }
 
+    function showItemTypeManagement() {
+        setViewPortContent(
+            <ManagementPanel<ItemTypeDataRow>
+                key="itemTypeManagementPanel"
+                config={
+                    {
+                        routeHandler: "/management/itemtype",
+                        table: {
+                            columns: [
+                                ["id", "Mã loại sản phẩm"],
+                                ["name", "Tên loại sản phẩm"]
+                            ]
+                        }
+                    }
+                }
+                AddScreen={undefined}
+                EditScreen={undefined}
+                user={user}
+            />
+        );
+    }
+
     // View:
     return (
         <div className="block widthFitParent heightFitParent">
             {/* Menu bar */}
-            <MenuBar user={user} onLogout={onLogout} show={showMenuBar} onUserManagementMenuClick={showUserManagement} onItemManagementMenuClick={showItemManagement} />
+            <MenuBar
+                user={user}
+                onLogout={onLogout}
+                show={showMenuBar}
+                onUserManagementMenuClick={showUserManagement}
+                onItemManagementMenuClick={showItemManagement}
+                onItemTypeManagementMenuClick={showItemTypeManagement}
+            />
 
             {/* Content area */}
             <ContentArea menuBarShow={showMenuBar} viewPortContent={ viewPortContent } onMenuButtonClick={swapShowMenuBar} />
