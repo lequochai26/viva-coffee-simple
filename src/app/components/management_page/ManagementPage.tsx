@@ -16,6 +16,7 @@ import EditItemBox from "./EditItemBox";
 import ItemTypeDataRow from "./interfaces/ItemTypeDataRow";
 import AddItemTypeBox from "./AddItemTypeBox";
 import EditItemTypeBox from "./EdiItemTypeBox";
+import OrderDataRow from "./interfaces/OrderDataRow";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -105,6 +106,30 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
         );
     }
 
+    function showOrderManagement() {
+        setViewPortContent(
+            <ManagementPanel<OrderDataRow>
+                key="orderManagementPanel"
+                config={
+                    {
+                        routeHandler: "/management/order",
+                        table: {
+                            columns: [
+                                ["id", "Mã"],
+                                ["date", "Ngày lập"],
+                                ["totalPrice", "Tổng thành tiền"],
+                                ["createdByFullName", "Lập bởi"]
+                            ]
+                        }
+                    }
+                }
+                AddScreen={undefined}
+                EditScreen={undefined}
+                user={user}
+            />
+        );
+    }
+
     // View:
     return (
         <div className="block widthFitParent heightFitParent">
@@ -116,6 +141,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 onUserManagementMenuClick={showUserManagement}
                 onItemManagementMenuClick={showItemManagement}
                 onItemTypeManagementMenuClick={showItemTypeManagement}
+                onOrderManagementMenuClick={showOrderManagement}
             />
 
             {/* Content area */}
