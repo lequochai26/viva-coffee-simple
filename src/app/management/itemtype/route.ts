@@ -120,3 +120,48 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
         );
     }
 }
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get body's target field
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần thêm!" }
+            );
+        }
+
+        // Destruct target
+        const { id, name }: any = target;
+
+        // Item type entity with given id already exist case
+        if (await itemTypeManager.get(id, [])) {
+            return NextResponse.json(
+                { success: false, message: `Đã tồn tại một loại sản phẩm với mã "${id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Create new item type entity
+        const itemType: ItemType = new ItemType();
+        itemType.Id = id;
+        itemType.Name = name;
+
+        // Add this item type entity into db
+        await itemTypeManager.insert(itemType);
+
+        // Success responding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        )
+    }
+}
