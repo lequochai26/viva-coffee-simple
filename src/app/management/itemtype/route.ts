@@ -165,3 +165,49 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         )
     }
 }
+
+export async function PUT(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target field of body
+        const target: any = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần chỉnh sửa!" }
+            );
+        }
+
+        // Destruct target
+        const { id, name }: any = target;
+
+        // Get item type entity with given id
+        const itemType: ItemType | undefined = await itemTypeManager.get(id, []);
+
+        // Item type entity not found in db
+        if (!itemType) {
+            return NextResponse.json(
+                { success: false, message: `Không tồn tại loại sản phẩm với mã "${id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Updating itemType's fields
+        itemType.Name = name;
+
+        // Update item type entity
+        itemTypeManager.update(itemType);
+
+        // Success responding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
