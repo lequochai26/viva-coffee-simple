@@ -1,9 +1,8 @@
-import { orderManager } from "@/domain/EntityManagerCollection";
-import Order from "@/domain/entities/Order";
-import OrderItem from "@/domain/entities/OrderItem";
 import { NextRequest, NextResponse } from "next/server";
+import { Order, OrderItem } from "@/app/interfaces/Order";
+import { orderManager } from "@/domain/EntityManagerCollection";
+import { OrderEntity, OrderItemEntity } from "./aliases";
 
-// Methods:
 export async function GET(request: NextRequest): Promise<NextResponse> {
     try {
         // Get get method from request's header
@@ -16,20 +15,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             );
         }
 
-        // Get data base on get method
+        // Getting data base on given get method
         switch (getMethod) {
-            case "GETALL": return NextResponse.json(
+            case 'GETALL': return NextResponse.json(
                 {
                     success: true,
                     result: (await orderManager.getAll([])).map(
-                        function (order: Order) {
-                            return convertOrderEntity(order)
+                        function (order: OrderEntity): Order {
+                            return convertOrderEntity(order);
                         }
                     )
                 }
-            );
+            )
 
-            case "GETBYKEYWORD": {
+            case 'GETALL': {
                 // Get keyword
                 const keyword: string | null = request.nextUrl.searchParams.get("keyword");
 
@@ -45,29 +44,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                     {
                         success: true,
                         result: (await orderManager.getAll([])).map(
-                            function (order: Order) {
+                            function (order: OrderEntity): Order {
                                 return convertOrderEntity(order);
                             }
                         ).filter(
-                            function (order: any) {
-                                let items: string = "";
-
-                                order.items.forEach(
-                                    function (item: any, index: number) {
-                                        if (index !== 0) {
-                                            items += " "
-                                        }
-                                        items += `${item.itemId} ${item.itemName} ${item.amount} ${item.totalPrice}`
-                                    }
-                                );
-
-                                if (`${order.id} ${order.date} ${order.createdBy.username} ${order.createdBy.fullName} ${order.totalPrice} ${ items }`.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+                            function (order: Order) {
+                                if (`${order.id} ${order.createdBy} ${order.createdByFullName} ${order.date} ${order.totalPrice}`.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                                     return order;
                                 }
                             }
                         )
                     }
-                );
+                )
             }
 
             default: return NextResponse.json(
@@ -78,32 +66,33 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     catch (error: any) {
         return NextResponse.json(
             { success: false, message: error.toString() }
-        )
+        );
     }
 }
 
-function convertOrderEntity(order: Order): any {
-    const items: any[] = [];
+// Local functions
+function convertOrderEntity(order: OrderEntity): Order {
+    const items: OrderItem[] = [];
 
     order.Items.forEach(
-        function (orderItem: OrderItem) {
+        function (item: OrderItemEntity) {
             items.push(
                 {
-                    itemId: orderItem.Item?.Id,
-                    itemName: orderItem.Item?.Name,
-                    amount: orderItem.Amount,
-                    totalPrice: orderItem.TotalPrice
+                    item: item.Item?.Id as string,
+                    itemName: item.Item?.Name as string,
+                    amount: item.Amount as number,
+                    totalPrice: item.TotalPrice as number
                 }
             );
         }
-    );
+    )
 
     return {
-        id: order.Id,
-        date: order.Date,
-        createdBy: order.CreatedBy?.Username,
-        createdByFullName: order.CreatedBy?.FullName,
-        totalPrice: order.TotalPrice,
+        id: order.Id as string,
+        date: order.Date as Date,
+        totalPrice: order.TotalPrice as number,
+        createdBy: order.CreatedBy?.Username as string,
+        createdByFullName: order.CreatedBy?.FullName as string,
         items: items
-    }
+    };
 }
