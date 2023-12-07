@@ -185,13 +185,13 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
 
     function showAddScreen(): void {
         setFixedScreenContent(
-            <AddScreen onAlter={load} close={closeFixedScreen} />
+            <AddScreen user={user} onAlter={load} close={closeFixedScreen} />
         );
     }
 
     function showEditScreen(index: number): void {
         setFixedScreenContent(
-            <EditScreen target={data[index]} onAlter={load} close={closeFixedScreen} />
+            <EditScreen user={user} target={data[index]} onAlter={load} close={closeFixedScreen} />
         );
     }
 
