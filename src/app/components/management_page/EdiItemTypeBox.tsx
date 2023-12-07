@@ -84,6 +84,15 @@ export default function EditItemTypeBox({ target, onAlter, close }: EntityAlterS
                     <Button type="submit" value="Sửa" className="margin5px" />
                 </p>
 
+                {/* Message displaying */}
+                {
+                    message && (
+                        <p className="width200px heightFitContent textColorRed textAlignJustify fontSize12px">
+                            { message }
+                        </p>
+                    )
+                }
+
             </form>
 
         </div>
