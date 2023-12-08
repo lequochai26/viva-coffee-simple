@@ -17,6 +17,17 @@ export default class Order {
         this.createdBy = createdBy;
         this.items = (items || []);
     }
+
+    // Behaviours:
+    public calculateTotalPrice(): number {
+        this.totalPrice = 0;
+        
+        for (const item of this.items) {
+            this.totalPrice += (item.TotalPrice ? item.TotalPrice : 0);
+        }
+
+        return this.totalPrice;
+    }
     
     // Getters & setters
     public get Id(): string | undefined {

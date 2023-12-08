@@ -16,6 +16,12 @@ export default class OrderItem {
         this.totalPrice = totalPrice;
     }
 
+    // Behaviours:
+    public calculateTotalPrice(): number {
+        this.totalPrice = (this.item?.Price as number) * (this.amount as number);
+        return this.totalPrice;
+    }
+
     // Getters & setters:
     public get Order(): Order | undefined {
         return this.order;

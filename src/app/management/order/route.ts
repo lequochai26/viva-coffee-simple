@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Order, OrderItem } from "@/app/interfaces/Order";
-import { orderManager } from "@/domain/EntityManagerCollection";
-import { OrderEntity, OrderItemEntity } from "./aliases";
+import { itemManager, orderItemManager, orderManager, userManager } from "@/domain/EntityManagerCollection";
+import { OrderEntity, OrderItemEntity } from "./aliases/entityAliases";
+import orderJsonToOrderEntity from "./scripts/orderJsonToOrderEntity";
+import orderIdGenerate from "./scripts/orderIdGenerate";
 
+// Methods:
 export async function GET(request: NextRequest): Promise<NextResponse> {
     try {
         // Get get method from request's header
@@ -66,6 +69,57 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     catch (error: any) {
         return NextResponse.json(
             { success: false, message: error.toString() }
+        );
+    }
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const body: any = await request.json();
+
+        // Get target field of body
+        const target: Order | undefined = body.target;
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần thêm!" }
+            );
+        }
+
+        // Get current date
+        const date: Date = new Date();
+
+        // Generate id string
+        const id: string | undefined = await orderIdGenerate(date, orderManager);
+
+        // Failed to generate id case
+        if (!id) {
+            return NextResponse.json(
+                { success: false, message: "Đã đạt đến tối đa số lượng đơn cho ngày hôm nay!" }
+            );
+        }
+
+        // Convert target into order entity
+        const order: OrderEntity = await orderJsonToOrderEntity(target, id, date, userManager, itemManager);
+
+        // Saving order's items dependency into db
+        for (const orderItem of order.Items) {
+            await orderItemManager.insert(orderItem);
+        }
+
+        // Saving order entity into db
+        await orderManager.insert(order);
+
+        // Success responding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString( )}
         );
     }
 }
