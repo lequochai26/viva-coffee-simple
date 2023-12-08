@@ -17,6 +17,8 @@ import ItemTypeDataRow from "./interfaces/ItemTypeDataRow";
 import AddItemTypeBox from "./AddItemTypeBox";
 import EditItemTypeBox from "./EdiItemTypeBox";
 import OrderDataRow from "./interfaces/OrderDataRow";
+import AddOrderBox from "./add_order_screen/AddOrderBox";
+import AddOrderScreen from "./add_order_screen/AddOrderScreen";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -134,7 +136,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                         viewable: true
                     }
                 }
-                AddScreen={undefined}
+                AddScreen={AddOrderScreen}
                 EditScreen={undefined}
                 ViewScreen={undefined}
                 user={user}

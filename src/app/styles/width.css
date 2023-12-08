@@ -45,3 +45,23 @@
 .widthFitScreen {
     width: 100vw;
 }
+
+.width40Percent {
+    width: 40%;
+}
+
+.width45Percent {
+    width: 45px;
+}
+
+.width95Percent {
+    width: 95%;
+}
+
+.width50px {
+    width: 50px
+}
+
+.width75px {
+    width: 75px;
+}
