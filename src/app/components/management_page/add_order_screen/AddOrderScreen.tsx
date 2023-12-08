@@ -4,7 +4,7 @@ import { useState } from "react";
 import User from "@/app/interfaces/User";
 import Item from "@/app/interfaces/Item";
 import AddOrderBox from "./AddOrderBox";
-import AddOrderItemBox from "./add_order_item_box/AddOrderItemBox";
+import AddOrderItemBox from "./AddOrderItemBox";
 
 // Main component:
 export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScreenProps<Order>) {
