@@ -4,6 +4,7 @@ import { useState } from "react";
 import User from "@/app/interfaces/User";
 import Item from "@/app/interfaces/Item";
 import AddOrderBox from "./AddOrderBox";
+import AddOrderItemBox from "./add_order_item_box/AddOrderItemBox";
 
 // Main component:
 export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScreenProps<Order>) {
@@ -26,7 +27,20 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
             totalPrice: 0
         }
     );
-    const [ itemList, setItemList ] = useState<{ [index: string]: Item[] }>({});
+    const [ itemList, setItemList ] = useState<{ [index: string]: Item[] }>(
+        {
+            "Cà phê": [
+                {
+                    id: "ASD",
+                    name: "Cà phê sữa đá",
+                    price: 20000,
+                    typeId: "A",
+                    typeName: "ASD"
+                }
+            ]
+        }
+    );
+    const [ keyword, setKeyword ] = useState<string>("");
 
     // View:
     return (
@@ -38,6 +52,16 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
                 onAmountChange={function (event: any, index: number) {}}
                 onCancel={function () {}}
                 onRemove={function (index: number) {}}
+            />
+
+            {/* Add order item box */}
+            <AddOrderItemBox
+                itemList={itemList}
+                keyword={keyword}
+                onAdd={function (type: string, index: number): void {}}
+                onKeywordChange={function (event: any): void {}}
+                onReload={function (): void {}}
+                onSearch={function (): void {}}
             />
         </div>
     )
