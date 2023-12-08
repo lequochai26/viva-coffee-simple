@@ -125,7 +125,7 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
             {/* Actions area */}
             <div className="widthFitParent heightFitContent padding10px margin10px">
                 {/* Cancel button */}
-                <Button type="normal" value="Hủy" onClick={close} className="margin5px fontSize25px" />
+                <Button type="normal" value="Hủy" onClick={onCancel} className="margin5px fontSize25px" />
 
                 {/* Add button */}
                 <Button type="normal" value="Tạo" onClick={onAdd} className="margin5px fontSize25px" />
