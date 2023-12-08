@@ -17,3 +17,7 @@
 .borderTopNone {
     border-top: none;
 }
+
+.borderRadius10px {
+    border-radius: 10px;
+}

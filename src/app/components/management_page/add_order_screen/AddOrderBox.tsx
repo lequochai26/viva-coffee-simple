@@ -1,6 +1,7 @@
 import { Order, OrderItem } from "@/app/interfaces/Order";
 import InputField from "../../InputField";
 import Image from "next/image";
+import Button from "../../Button";
 
 // Interfaces:
 export interface AddOrderBoxProps {
@@ -15,7 +16,7 @@ export interface AddOrderBoxProps {
 export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, onCancel }: AddOrderBoxProps) {
     // View:
     return (
-        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius5px">
+        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius10px">
             
             {/* Title */}
             <div className="widthFitParent heightFitContent textAlignJustify padding10px marginBottom10px">
@@ -25,7 +26,7 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
             </div>
 
             {/* Order detail table */}
-            <div className="widthFitParent height350px textAlignCenter" style={{ overflow: 'scroll' }}>
+            <div className="widthFitParent height350px textAlignCenter marginBottom25px" style={{ overflow: 'scroll' }}>
                 
                 <div className="inlineBlock width95Percent heightFitContent borderBlackThin">
                     <table className="widthFitParent heightFitContent fontSize20px">
@@ -81,7 +82,7 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
 
                                                 {/* Total price */}
                                                 <td>
-                                                    { item.totalPrice }
+                                                    { item.amount * item.itemPrice }
                                                 </td>
 
                                                 {/* Actions */}
@@ -102,7 +103,33 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
 
             </div>
 
-            
+            {/* Total price displaying */}
+            <div className="widthFitParent heightFitContent textAlignJustify fontSize25px fontWeightBold padding10px marginBottom10px">
+                Tổng thành tiền: { 
+                    (
+                        function (): number {
+                            let result: number = 0;
+
+                            fields.items.forEach(
+                                function (item: OrderItem) {
+                                    result += item.amount * item.itemPrice;
+                                }
+                            )
+
+                            return result;
+                        }
+                    )()
+                }
+            </div>
+
+            {/* Actions area */}
+            <div className="widthFitParent heightFitContent padding10px margin10px">
+                {/* Cancel button */}
+                <Button type="normal" value="Hủy" onClick={close} className="margin5px fontSize25px" />
+
+                {/* Add button */}
+                <Button type="normal" value="Tạo" onClick={onAdd} className="margin5px fontSize25px" />
+            </div>
 
         </div>
     )

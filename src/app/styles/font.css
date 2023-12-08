@@ -4,20 +4,12 @@
 }
 
 /* Font size */
-.fontSize25px {
-    font-size: 25px;
-}
-
 .fontSizeInherit {
     font-size: inherit;
 }
 
 .fontSize17px {
     font-size: 17px;
-}
-
-.fontSize20px {
-    font-size: 20px;
 }
 
 .fontSize15px {
@@ -30,6 +22,14 @@
 
 .fontSize8px {
     font-size: 8px;
+}
+
+.fontSize20px {
+    font-size: 20px;
+}
+
+.fontSize25px {
+    font-size: 25px;
 }
 
 /* Font weight */
