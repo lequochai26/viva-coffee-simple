@@ -1,6 +1,7 @@
 export interface OrderItem {
     item: string;
     itemName: string;
+    itemPrice: number;
     amount: number;
     totalPrice: number;
 }

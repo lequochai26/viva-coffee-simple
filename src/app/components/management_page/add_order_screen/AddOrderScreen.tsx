@@ -18,6 +18,7 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
                 {
                     item: "asd",
                     itemName: "Không biết",
+                    itemPrice: 10000,
                     amount: 10,
                     totalPrice: 25
                 }

@@ -80,6 +80,7 @@ function convertOrderEntity(order: OrderEntity): Order {
                 {
                     item: item.Item?.Id as string,
                     itemName: item.Item?.Name as string,
+                    itemPrice: item.Item?.Price as number,
                     amount: item.Amount as number,
                     totalPrice: item.TotalPrice as number
                 }
