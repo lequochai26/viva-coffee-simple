@@ -1,4 +1,4 @@
-import { Order } from "@/app/interfaces/Order";
+import { Order, OrderItem } from "@/app/interfaces/Order";
 import EntityAlterScreenProps from "../../management_panel/interfaces/EntityAlterScreenProps";
 import { useEffect, useState } from "react";
 import User from "@/app/interfaces/User";
@@ -19,31 +19,11 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
             createdBy: (user as User).username,
             createdByFullName: (user as User).fullName,
             date: new Date(),
-            items: [
-                {
-                    item: "asd",
-                    itemName: "Không biết",
-                    itemPrice: 10000,
-                    amount: 10,
-                    totalPrice: 25
-                }
-            ],
+            items: [],
             totalPrice: 0
         }
     );
-    const [ itemList, setItemList ] = useState<{ [index: string]: Item[] }>(
-        {
-            "Cà phê": [
-                {
-                    id: "ASD",
-                    name: "Cà phê sữa đá",
-                    price: 20000,
-                    typeId: "A",
-                    typeName: "ASD"
-                }
-            ]
-        }
-    );
+    const [ itemList, setItemList ] = useState<{ [index: string]: Item[] }>({});
     const [ keyword, setKeyword ] = useState<string>("");
 
     // Data operations:
@@ -55,7 +35,7 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
                 {
                     method: "GET",
                     headers: [
-                        ["method", "GETALL"]
+                        ["method", (keyword ? "GETBYKEYWORD" : "GETALL")]
                     ]
                 }
             );
@@ -80,6 +60,50 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
         }
     }
 
+    async function addNewOrder(): Promise<void> {
+        // Precheck
+        if (fields.items.length < 1) {
+            alert("Đơn hàng không hợp lệ, vui lòng thử lại!");
+            return;
+        }
+        
+        // Adding new order processing
+        try {
+            // Sending HTTP request and receiving response
+            const response: Response = await fetch(
+                routeHandler,
+                {
+                    method: "POST",
+                    body: JSON.stringify(
+                        {
+                            target: fields
+                        }
+                    )
+                }
+            );
+
+            // Parsing response's body into json
+            const { success, message }: { success: boolean, message: string } = await response.json();
+
+            // Failed case
+            if (!success) {
+                alert(message);
+            }
+            // Success case
+            else {
+                // Fire onAlter
+                onAlter();
+
+                // Close
+                close();
+            }
+        }
+        catch (error: any) {
+            alert("Đã có lỗi xảy ra!");
+            console.error(error);
+        }
+    }
+
     // Effects:
     useEffect(
         function () {
@@ -87,26 +111,63 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
         }, []
     )
 
+    // Event handler:
+    function changeOrderItemAmount(event: any, index: number): void {
+        const newFields: Order = cloneFields(fields);
+        newFields.items[index].amount = event.target.value;
+        setFields(newFields);
+    }
+
+    function removeOrderItem(index: number): void {
+        const newFields: Order = cloneFields(fields);
+        newFields.items = newFields.items.filter(
+            function (item: OrderItem, _index: number) {
+                if (_index !== index) {
+                    return item;
+                }
+            }
+        )
+        setFields(newFields);
+    }
+
+    function addOrderItem(type: string, index: number): void {
+        const newFields: Order = cloneFields(fields);
+        newFields.items.push(
+            {
+                item: itemList[type][index].id,
+                itemName: itemList[type][index].name,
+                itemPrice: itemList[type][index].price,
+                amount: 1,
+                totalPrice: 0
+            }
+        );
+        setFields(newFields);
+    }
+
+    function changeKeyword(event: any) {
+        setKeyword(event.target.value);
+    }
+
     // View:
     return (
         <div className="inlineBlock verticalAlignMiddle widthFitParent heightFitContent">
             {/* Add order box */}
             <AddOrderBox
                 fields={fields}
-                onAdd={function() {}}
-                onAmountChange={function (event: any, index: number) {}}
-                onCancel={function () {}}
-                onRemove={function (index: number) {}}
+                onAdd={addNewOrder}
+                onAmountChange={changeOrderItemAmount}
+                onCancel={close}
+                onRemove={removeOrderItem}
             />
 
             {/* Add order item box */}
             <AddOrderItemBox
                 itemList={itemList}
                 keyword={keyword}
-                onAdd={function (type: string, index: number): void {}}
-                onKeywordChange={function (event: any): void {}}
-                onReload={function (): void {}}
-                onSearch={function (): void {}}
+                onAdd={addOrderItem}
+                onKeywordChange={changeKeyword}
+                onReload={function () {load()}}
+                onSearch={function () {load(keyword)}}
             />
         </div>
     )
@@ -129,4 +190,16 @@ function itemsToItemList(items: Item[]): { [index: string]: Item[] } {
 
     // Return item list
     return itemList
+}
+
+function cloneFields(fields: Order): Order {
+    const newFields: Order = { ...fields };
+
+    newFields.items = newFields.items.map(
+        function (item: OrderItem) {
+            return { ...item };
+        }
+    );
+
+    return newFields;
 }

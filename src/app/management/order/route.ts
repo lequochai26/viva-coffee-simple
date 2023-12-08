@@ -119,7 +119,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
     catch (error: any) {
         return NextResponse.json(
-            { success: false, message: error.toString( )}
+            { success: false, message: error.toString() }
         );
     }
 }

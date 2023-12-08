@@ -39,7 +39,7 @@ export default function AddOrderItemBox({ keyword, itemList, onKeywordChange, on
 
                             for (const typeName in itemList) {
                                 elements.push(
-                                    <div key="typeName">
+                                    <div key={typeName}>
                                         {/* Title */}
                                         <h1>
                                             { typeName }
@@ -70,31 +70,35 @@ export default function AddOrderItemBox({ keyword, itemList, onKeywordChange, on
                                             </thead>
 
                                             {/* Body */}
-                                            {
-                                                itemList[typeName].map(
-                                                    function (item: Item, index: number): JSX.Element {
-                                                        return (
-                                                            <tr key={`${typeName} ${item.id}`}>
-                                                                <td>
-                                                                    { item.id }
-                                                                </td>
+                                            <tbody>
 
-                                                                <td>
-                                                                    { item.name }
-                                                                </td>
+                                                {
+                                                    itemList[typeName].map(
+                                                        function (item: Item, index: number): JSX.Element {
+                                                            return (
+                                                                <tr key={`${typeName} ${item.id}`}>
+                                                                    <td>
+                                                                        { item.id }
+                                                                    </td>
 
-                                                                <td>
-                                                                    { item.price }
-                                                                </td>
+                                                                    <td>
+                                                                        { item.name }
+                                                                    </td>
 
-                                                                <td className="textAlignRight">
-                                                                    <Button type="normal" value="Thêm" onClick={function() {onAdd(typeName, index)}} />
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    }
-                                                )
-                                            }
+                                                                    <td>
+                                                                        { item.price }
+                                                                    </td>
+
+                                                                    <td className="textAlignRight">
+                                                                        <Button type="normal" value="Thêm" onClick={function() {onAdd(typeName, index)}} />
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        }
+                                                    )
+                                                }
+
+                                            </tbody>
 
                                         </table>
                                     </div>
