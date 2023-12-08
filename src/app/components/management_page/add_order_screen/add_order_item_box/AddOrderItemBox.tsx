@@ -16,7 +16,7 @@ interface AddOrderItemBoxProps {
 export default function AddOrderItemBox({ keyword, itemList, onKeywordChange, onSearch, onReload, onAdd }: AddOrderItemBoxProps) {
     // View:
     return (
-        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius10px">
+        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius10px margin25px">
             {/* Search area */}
             <div className="block widthFitParent heightFitContent textAlignJustify padding10px">
                 {/* Keyword input field */}

@@ -16,7 +16,7 @@ export interface AddOrderBoxProps {
 export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, onCancel }: AddOrderBoxProps) {
     // View:
     return (
-        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius10px">
+        <div className="inlineBlock verticalAlignMiddle width40Percent heightFitContent backgroundWhite borderBlackThin borderRadius10px margin25px">
             
             {/* Title */}
             <div className="widthFitParent heightFitContent textAlignJustify padding10px marginBottom10px">
