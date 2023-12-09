@@ -114,7 +114,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         // Success responding
         return NextResponse.json(
-            { success: true }
+            { success: true, id: id, date: date }
         );
     }
     catch (error: any) {
