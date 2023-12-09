@@ -52,9 +52,16 @@ export default function UserArea({ user, onLogout }: UserAreaProps) {
 
             {
                 (
-                    hovering
-                    &&
-                    <Button type="normal" value="Đăng xuất" className="fontSize12px" onClick={onLogout} />
+                    hovering && (
+                        <div>
+                            <p>
+                                <Button type="normal" value="Thay đổi mật khẩu" className="fontSize12px" />
+                            </p>
+                            <p>
+                                <Button type="normal" value="Đăng xuất" className="fontSize12px" onClick={onLogout} />
+                            </p>
+                        </div>
+                    )
                 )
             }
         </div>
