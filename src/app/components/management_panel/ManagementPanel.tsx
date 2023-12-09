@@ -280,6 +280,17 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
         );
     }
 
+    function onDeleteSelected(): void {
+        for (const record of data) {
+            if (record.selected) {
+                showDeleteSelectedConfirmDialog();
+                return;
+            }
+        }
+
+        alert("Chưa có dữ liệu nào được chọn!");
+    }
+
     // Effects:
     useEffect(
         function () {
@@ -300,7 +311,7 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
                     deletable={config.deletable}
                     keyword={searchKeyword}
                     onAdd={showAddScreen}
-                    onDelete={showDeleteSelectedConfirmDialog}
+                    onDelete={onDeleteSelected}
                     onReload={load}
                     onKeywordChange={onSearchKeywordChange}
                     onSearch={loadByKeyword}
