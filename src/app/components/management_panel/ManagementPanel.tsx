@@ -224,7 +224,12 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
         setFixedScreenContent(
             <DeleteConfirmDialog
                 onCancel={closeFixedScreen}
-                onConfirm={function () {deleteRow(index)}}
+                onConfirm={
+                    function () {
+                        deleteRow(index);
+                        closeFixedScreen();
+                    }
+                }
             />
         )
     }
@@ -233,7 +238,12 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
         setFixedScreenContent(
             <DeleteConfirmDialog
                 onCancel={closeFixedScreen}
-                onConfirm={deleteSelected}
+                onConfirm={
+                    function () {
+                        deleteSelected();
+                        closeFixedScreen();
+                    }
+                }
             />
         )
     }
