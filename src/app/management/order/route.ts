@@ -31,7 +31,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 }
             )
 
-            case 'GETALL': {
+            case 'GETBYKEYWORD': {
                 // Get keyword
                 const keyword: string | null = request.nextUrl.searchParams.get("keyword");
 
