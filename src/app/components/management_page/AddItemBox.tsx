@@ -80,12 +80,33 @@ export default function AddItemBox({ onAlter, close }: EntityAlterScreenProps<It
 
     // Event handlers:
     function onFieldChange({ target }: any): void {
-        setFields({ ...fields, [target.name]: target.value });
+        switch(target.name) {
+            case 'price': {
+                if (Number.isNaN(target.valueAsNumber)) {
+                    return;
+                }
+
+                if (target.valueAsNumber < 0) {
+                    return;
+                }
+
+                return setFields({ ...fields, price: target.valueAsNumber });
+            }
+
+            default: return setFields({ ...fields, [target.name]: target.value });
+        }
     }
 
     async function onSubmit(event: any): Promise<void> {
         // Default preventing
         event.preventDefault();
+
+        // Precheck
+        // Price checking
+        if (fields.price < 1) {
+            setMessage("Đơn giá không hợp lệ!");
+            return;
+        }
 
         try {
             // Sending HTTP request and receiving response
