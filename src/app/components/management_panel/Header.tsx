@@ -3,6 +3,7 @@ import InputField from "../InputField";
 
 // Interfaces:
 interface HeaderProps {
+    deletable: boolean;
     keyword: string;
     onAdd?(): void;
     onDelete?(): void;
@@ -12,7 +13,7 @@ interface HeaderProps {
 }
 
 // Main component:
-export default function Header({ keyword, onAdd, onDelete, onKeywordChange, onSearch, onReload }: HeaderProps) {
+export default function Header({ deletable, keyword, onAdd, onDelete, onKeywordChange, onSearch, onReload }: HeaderProps) {
     return (
         <div className="block widthFitParent height37px backgroundWhite borderBlackThin borderTopNone">
             {/* Ruler */}
@@ -22,7 +23,11 @@ export default function Header({ keyword, onAdd, onDelete, onKeywordChange, onSe
             <Button type="normal" value="Thêm" className="inlineBlock verticalAlignMiddle fontSize12px marginLeft10px" onClick={onAdd} />
 
             {/* Remove button */}
-            <Button type="normal" value="Xóa" className="inlineBlock verticalAlignMiddle fontSize12px marginLeft10px" onClick={onDelete} />
+            {
+                deletable && (
+                    <Button type="normal" value="Xóa" className="inlineBlock verticalAlignMiddle fontSize12px marginLeft10px" onClick={onDelete} />
+                )
+            }
 
             {/* Keyword input field */}
             <InputField type="text" name="searchKeyword" value={keyword} placeholder="Từ khóa tìm kiếm" className="inlineBlock width350px verticalAlignMiddle fontSize12px marginLeft10px borderBlackThin borderRadius5px" onChange={onKeywordChange} />

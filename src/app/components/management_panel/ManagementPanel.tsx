@@ -14,6 +14,7 @@ interface ManagementPanelProps<T> {
         }
         editable: boolean;
         viewable: boolean;
+        deletable: boolean;
     };
     AddScreen: any;
     EditScreen: any;
@@ -252,10 +253,10 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
             {/* Management panel */}
             <div className="block widthFitParent heightFitParent">
                 {/* Header */}
-                <Header keyword={searchKeyword} onAdd={showAddScreen} onDelete={deleteSelected} onReload={load} onKeywordChange={onSearchKeywordChange} onSearch={loadByKeyword} />
+                <Header deletable={config.deletable} keyword={searchKeyword} onAdd={showAddScreen} onDelete={deleteSelected} onReload={load} onKeywordChange={onSearchKeywordChange} onSearch={loadByKeyword} />
 
                 {/* Table */}
-                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} editable={config.editable} viewable={config.viewable} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} onEdit={showEditScreen} onView={showViewScreen} />
+                <DataTable data={data} selectAll={selectAll} tableConfig={config.table} editable={config.editable} viewable={config.viewable} deletable={config.deletable} onSelectAll={onSelectAll} onSelect={onRowSelect} onDelete={deleteRow} onEdit={showEditScreen} onView={showViewScreen} />
             </div>
         </>
     );

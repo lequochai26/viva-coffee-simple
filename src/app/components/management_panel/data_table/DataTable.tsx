@@ -8,6 +8,7 @@ interface DataTableProps<T extends DataRow> {
     };
     editable: boolean;
     viewable: boolean;
+    deletable: boolean;
     data: T[];
     selectAll: boolean;
     onSelectAll?(): void;
@@ -18,7 +19,7 @@ interface DataTableProps<T extends DataRow> {
 }
 
 // Main component:
-export default function DataTable<T extends DataRow>({ tableConfig, editable, viewable, data, selectAll, onSelectAll, onSelect, onEdit, onDelete, onView }: DataTableProps<T>) {
+export default function DataTable<T extends DataRow>({ tableConfig, editable, viewable, deletable, data, selectAll, onSelectAll, onSelect, onEdit, onDelete, onView }: DataTableProps<T>) {
     // View:
     return (
         <table className="widthFitParent heightFitContent fontSize12px">
@@ -97,7 +98,11 @@ export default function DataTable<T extends DataRow>({ tableConfig, editable, vi
                                         }
                                         
                                         {/* Delete button */}
-                                        <Button type="normal" value="Xóa" onClick={onDelete && function() {onDelete(index)}} className="inlineBlock fontSize12px margin5px" />
+                                        {
+                                            deletable && (
+                                                <Button type="normal" value="Xóa" onClick={onDelete && function() {onDelete(index)}} className="inlineBlock fontSize12px margin5px" />
+                                            )
+                                        }
                                     </td>
                                 </tr>
                             )

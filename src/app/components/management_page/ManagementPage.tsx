@@ -1,8 +1,5 @@
-import Image from "next/image";
 import { useState } from "react";
-import Button from "../Button";
 import User from "../../interfaces/User";
-import UserManagement from "../usermanagement_page/UserManagement";
 import DefaultContentAreaViewPortContent from "./DefaultContentAreaViewPortContent";
 import MenuBar from "./menubar/MenuBar";
 import ContentArea from "./content_area/ContentArea";
@@ -17,7 +14,6 @@ import ItemTypeDataRow from "./interfaces/ItemTypeDataRow";
 import AddItemTypeBox from "./AddItemTypeBox";
 import EditItemTypeBox from "./EdiItemTypeBox";
 import OrderDataRow from "./interfaces/OrderDataRow";
-import AddOrderBox from "./add_order_screen/AddOrderBox";
 import AddOrderScreen from "./add_order_screen/AddOrderScreen";
 import { ViewOrderBox } from "./ViewOrderBox";
 
@@ -55,7 +51,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                             ]
                         },
                         editable: true,
-                        viewable: false
+                        viewable: false,
+                        deletable: true
                     }
                 }
                 AddScreen={AddUserBox}
@@ -82,7 +79,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                             ]
                         },
                         editable: true,
-                        viewable: false
+                        viewable: false,
+                        deletable: true
                     }
                 }
                 AddScreen={AddItemBox}
@@ -107,7 +105,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                             ]
                         },
                         editable: true,
-                        viewable: false
+                        viewable: false,
+                        deletable: true
                     }
                 }
                 AddScreen={AddItemTypeBox}
@@ -134,7 +133,8 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                             ]
                         },
                         editable: false,
-                        viewable: true
+                        viewable: true,
+                        deletable: (user.permission === "ADMIN" ? true : false)
                     }
                 }
                 AddScreen={AddOrderScreen}
