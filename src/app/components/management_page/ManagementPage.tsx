@@ -16,6 +16,7 @@ import EditItemTypeBox from "./EdiItemTypeBox";
 import OrderDataRow from "./interfaces/OrderDataRow";
 import AddOrderScreen from "./add_order_screen/AddOrderScreen";
 import { ViewOrderBox } from "./ViewOrderBox";
+import DeleteConfirmDialog from "./DeleteConfirmDialog";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -58,6 +59,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 AddScreen={AddUserBox}
                 EditScreen={EditUserBox}
                 ViewScreen={undefined}
+                DeleteConfirmDialog={DeleteConfirmDialog}
                 user={user}
             />
         );
@@ -86,6 +88,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 AddScreen={AddItemBox}
                 EditScreen={EditItemBox}
                 ViewScreen={undefined}
+                DeleteConfirmDialog={DeleteConfirmDialog}
                 user={user}
             />
         );
@@ -112,6 +115,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 AddScreen={AddItemTypeBox}
                 EditScreen={EditItemTypeBox}
                 ViewScreen={undefined}
+                DeleteConfirmDialog={DeleteConfirmDialog}
                 user={user}
             />
         );
@@ -140,6 +144,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                 AddScreen={AddOrderScreen}
                 EditScreen={undefined}
                 ViewScreen={ViewOrderBox}
+                DeleteConfirmDialog={DeleteConfirmDialog}
                 user={user}
             />
         );
