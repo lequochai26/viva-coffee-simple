@@ -17,6 +17,7 @@ import OrderDataRow from "./interfaces/OrderDataRow";
 import AddOrderScreen from "./add_order_screen/AddOrderScreen";
 import { ViewOrderBox } from "./ViewOrderBox";
 import DeleteConfirmDialog from "./DeleteConfirmDialog";
+import FixedScreen from "../FixedScreen";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -31,6 +32,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
     const [ viewPortContent, setViewPortContent ] = useState<JSX.Element>(
         <DefaultContentAreaViewPortContent />
     );
+    const [ fixedScreenContent, setFixedScreenContent ] = useState<JSX.Element | undefined>(undefined);
 
     // Event handlers:
     function swapShowMenuBar() {
@@ -152,20 +154,24 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
 
     // View:
     return (
-        <div className="block widthFitParent heightFitParent">
-            {/* Menu bar */}
-            <MenuBar
-                user={user}
-                onLogout={onLogout}
-                show={showMenuBar}
-                onUserManagementMenuClick={showUserManagement}
-                onItemManagementMenuClick={showItemManagement}
-                onItemTypeManagementMenuClick={showItemTypeManagement}
-                onOrderManagementMenuClick={showOrderManagement}
-            />
+        <>
+            <FixedScreen content={fixedScreenContent} />
 
-            {/* Content area */}
-            <ContentArea menuBarShow={showMenuBar} viewPortContent={ viewPortContent } onMenuButtonClick={swapShowMenuBar} />
-        </div>
+            <div className="block widthFitParent heightFitParent">
+                {/* Menu bar */}
+                <MenuBar
+                    user={user}
+                    onLogout={onLogout}
+                    show={showMenuBar}
+                    onUserManagementMenuClick={showUserManagement}
+                    onItemManagementMenuClick={showItemManagement}
+                    onItemTypeManagementMenuClick={showItemTypeManagement}
+                    onOrderManagementMenuClick={showOrderManagement}
+                />
+
+                {/* Content area */}
+                <ContentArea menuBarShow={showMenuBar} viewPortContent={ viewPortContent } onMenuButtonClick={swapShowMenuBar} />
+            </div>
+        </>
     )
 }
