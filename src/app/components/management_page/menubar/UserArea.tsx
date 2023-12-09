@@ -7,10 +7,11 @@ import Button from "../../Button";
 interface UserAreaProps {
     user: User;
     onLogout?(): void;
+    onChangePassword?(): void;
 }
 
 // Main component:
-export default function UserArea({ user, onLogout }: UserAreaProps) {
+export default function UserArea({ user, onLogout, onChangePassword }: UserAreaProps) {
     // States:
     const [ hovering, setHovering ] = useState<boolean>(false);
 
@@ -55,7 +56,7 @@ export default function UserArea({ user, onLogout }: UserAreaProps) {
                     hovering && (
                         <div>
                             <p>
-                                <Button type="normal" value="Thay đổi mật khẩu" className="fontSize12px" />
+                                <Button type="normal" value="Thay đổi mật khẩu" className="fontSize12px" onClick={onChangePassword} />
                             </p>
                             <p>
                                 <Button type="normal" value="Đăng xuất" className="fontSize12px" onClick={onLogout} />
