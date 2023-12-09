@@ -4,6 +4,7 @@ import Header from "./Header";
 import DataRow from "./interfaces/DataRow";
 import DataTable from "./data_table/DataTable";
 import User from "@/app/interfaces/User";
+import EntityAlterScreenProps from "./interfaces/EntityAlterScreenProps";
 
 // Interfaces:
 interface ManagementPanelProps<T> {
@@ -16,9 +17,9 @@ interface ManagementPanelProps<T> {
         viewable: boolean;
         deletable: boolean;
     };
-    AddScreen: any;
-    EditScreen: any;
-    ViewScreen: any;
+    AddScreen?(props: EntityAlterScreenProps<T>): JSX.Element;
+    EditScreen?(props: EntityAlterScreenProps<T>): JSX.Element;
+    ViewScreen?(props: EntityAlterScreenProps<T>): JSX.Element;
     user: User;
 }
 
@@ -188,18 +189,30 @@ export default function ManagementPanel<T extends DataRow>({ config, AddScreen, 
     }
 
     function showAddScreen(): void {
+        if (!AddScreen) {
+            return;
+        }
+
         setFixedScreenContent(
             <AddScreen user={user} onAlter={load} close={closeFixedScreen} />
         );
     }
 
     function showEditScreen(index: number): void {
+        if (!EditScreen) {
+            return;
+        }
+
         setFixedScreenContent(
             <EditScreen user={user} target={data[index]} onAlter={load} close={closeFixedScreen} />
         );
     }
 
     function showViewScreen(index: number): void {
+        if (!ViewScreen) {
+            return;
+        }
+
         setFixedScreenContent(
             <ViewScreen user={user} target={data[index]} onAlter={load} close={closeFixedScreen} />
         );
