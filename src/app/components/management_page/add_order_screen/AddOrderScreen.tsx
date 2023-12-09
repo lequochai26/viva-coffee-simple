@@ -66,6 +66,13 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
             alert("Đơn hàng không hợp lệ, vui lòng thử lại!");
             return;
         }
+
+        for (const item of fields.items) {
+            if (item.amount < 1) {
+                alert("Đơn hàng không hợp lệ, vui lòng thử lại!");
+                return;
+            }
+        }
         
         // Adding new order processing
         try {
@@ -113,8 +120,14 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
 
     // Event handler:
     function changeOrderItemAmount(event: any, index: number): void {
+        if (Number.isNaN(event.target.valueAsNumber)) {
+            return;
+        }
+        if (event.target.valueAsNumber < 1) {
+            return;
+        }
         const newFields: Order = cloneFields(fields);
-        newFields.items[index].amount = event.target.value;
+        newFields.items[index].amount = event.target.valueAsNumber;
         setFields(newFields);
     }
 
@@ -132,6 +145,15 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
 
     function addOrderItem(type: string, index: number): void {
         const newFields: Order = cloneFields(fields);
+
+        for (const item of newFields.items) {
+            if (item.item === itemList[type][index].id) {
+                item.amount += 1;
+                setFields(newFields);
+                return;
+            }
+        }
+
         newFields.items.push(
             {
                 item: itemList[type][index].id,
@@ -181,10 +203,11 @@ function itemsToItemList(items: Item[]): { [index: string]: Item[] } {
     // Conversion
     items.forEach(
         function (item: Item): void {
-            if (!itemList[item.typeName]) {
-                itemList[item.typeName] = [];
+            const typeName: string = (item.typeName ? item.typeName : "Không xác định");
+            if (!itemList[typeName]) {
+                itemList[typeName] = [];
             }
-            itemList[item.typeName].push(item);
+            itemList[typeName].push(item);
         }
     )
 

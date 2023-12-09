@@ -29,7 +29,7 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
             <div className="widthFitParent height350px textAlignCenter marginBottom25px" style={{ overflow: 'scroll' }}>
                 
                 <div className="inlineBlock width95Percent heightFitContent borderBlackThin">
-                    <table className="widthFitParent heightFitContent fontSize20px">
+                    <table className="widthFitParent heightFitContent fontSize17px">
 
                         {/* Header */}
                         <thead>
@@ -77,7 +77,7 @@ export default function AddOrderBox({ fields, onRemove, onAmountChange, onAdd, o
 
                                                 {/* Amount */}
                                                 <td>
-                                                    <InputField type="number" name="" value={item.amount} onChange={function (event: any) {onAmountChange(event, index)}} className="textAlignCenter width75px" />
+                                                    <InputField type="number" name="" value={item.amount} onChange={function (event: any) {onAmountChange(event, index)}} className="textAlignCenter width75px" min={1} />
                                                 </td>
 
                                                 {/* Total price */}

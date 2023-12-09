@@ -46,7 +46,7 @@ export default function AddOrderItemBox({ keyword, itemList, onKeywordChange, on
                                         </h1>
 
                                         {/* Item table */}
-                                        <table className="widthFitParent">
+                                        <table className="widthFitParent fontSize17px">
 
                                             {/* Header */}
                                             <thead>
