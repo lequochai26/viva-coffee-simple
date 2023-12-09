@@ -124,6 +124,48 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 }
 
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
+    try {
+        // Parsing request's body into json
+        const { target }: { target: Order | undefined } = await request.json();
+
+        // Target not found case
+        if (!target) {
+            return NextResponse.json(
+                { success: false, message: "Không tìm thấy đối tượng cần xóa!" }
+            );
+        }
+
+        // Get Order entity base on target
+        const order: OrderEntity | undefined = await orderManager.get(target.id, []);
+
+        // Order entity not found in db case
+        if (!order) {
+            return NextResponse.json(
+                { success: false, message: `Không tồn tại đơn hàng với mã "${target.id}" trong cơ sở dữ liệu hệ thống!` }
+            );
+        }
+
+        // Removing order's items dependency
+        for (const item of order.Items) {
+            orderItemManager.remove(item);
+        }
+
+        // Removing order
+        orderManager.remove(order);
+
+        // Success responding
+        return NextResponse.json(
+            { success: true }
+        );
+    }
+    catch (error: any) {
+        return NextResponse.json(
+            { success: false, message: error.toString() }
+        );
+    }
+}
+
 // Local functions
 function convertOrderEntity(order: OrderEntity): Order {
     const items: OrderItem[] = [];
