@@ -22,96 +22,98 @@ interface DataTableProps<T extends DataRow> {
 export default function DataTable<T extends DataRow>({ tableConfig, editable, viewable, deletable, data, selectAll, onSelectAll, onSelect, onEdit, onDelete, onView }: DataTableProps<T>) {
     // View:
     return (
-        <table className="widthFitParent heightFitContent fontSize12px">
+        <div className="block widthFitParent" style={{ height: 'calc(100% - 37px)', overflow: 'scroll' }}>
+            <table className="widthFitParent heightFitContent fontSize12px">
 
-            {/* Header */}
-            <thead className="textAlignLeft">
-                
-                <tr>
-                    {/* Select all column */}
-                    <th>
-                        <input type="checkbox" checked={selectAll} onChange={onSelectAll} />
-                    </th>
+                {/* Header */}
+                <thead className="textAlignLeft">
+                    
+                    <tr>
+                        {/* Select all column */}
+                        <th>
+                            <input type="checkbox" checked={selectAll} onChange={onSelectAll} />
+                        </th>
 
-                    {/* Columns */}
+                        {/* Columns */}
+                        {
+                            tableConfig.columns.map(
+                                function ([ _, title ]: [keyof T, string], index: number) {
+                                    return (
+                                        <th key={index}>
+                                            { title }
+                                        </th>
+                                    )
+                                }
+                            )
+                        }
+
+                        {/* Operations column */}
+                        <th className="textAlignRight">
+                            Hành động
+                        </th>
+                    </tr>
+
+                </thead>
+
+                {/* Body */}
+                <tbody>
+
+                    {/* Data */}
                     {
-                        tableConfig.columns.map(
-                            function ([ _, title ]: [keyof T, string], index: number) {
+                        data.map(
+                            function (record: T, index: number) {
                                 return (
-                                    <th key={index}>
-                                        { title }
-                                    </th>
+                                    <tr key={index}>
+                                        {/* Select checkbox */}
+                                        <td>
+                                            <input type="checkbox" checked={record.selected} onChange={onSelect && function() {onSelect(index)}} />
+                                        </td>
+
+                                        {/* Fields displaying */}
+                                        {
+                                            tableConfig.columns.map(
+                                                function ([field, _]: [ keyof T, string ]) {
+                                                    return (
+                                                        <td key={`${index}${field.toString()}`}>
+                                                            { record[field] as any }
+                                                        </td>
+                                                    )
+                                                }
+                                            )
+                                        }
+
+                                        {/* Operation buttons */}
+                                        <td className="textAlignRight">
+                                            {/* Edit button */}
+                                            {
+                                                editable && (
+                                                    <Button type="normal" value="Sửa" onClick={onEdit && function() {onEdit(index)}} className="inlineBlock fontSize12px margin5px" />
+                                                )
+                                            }
+
+                                            {/* View button */}
+                                            {
+                                                viewable && (
+                                                    <Button type="normal" value="Chi tiết" onClick={onView && function() {onView(index)}} className="inlineBlock fontSize12px margin5px" />
+                                                )
+                                            }
+                                            
+                                            {/* Delete button */}
+                                            {
+                                                deletable && (
+                                                    <Button type="normal" value="Xóa" onClick={onDelete && function() {onDelete(index)}} className="inlineBlock fontSize12px margin5px" />
+                                                )
+                                            }
+                                        </td>
+                                    </tr>
                                 )
                             }
                         )
                     }
 
-                    {/* Operations column */}
-                    <th className="textAlignRight">
-                        Hành động
-                    </th>
-                </tr>
+                </tbody>
 
-            </thead>
-
-            {/* Body */}
-            <tbody>
-
-                {/* Data */}
-                {
-                    data.map(
-                        function (record: T, index: number) {
-                            return (
-                                <tr key={index}>
-                                    {/* Select checkbox */}
-                                    <td>
-                                        <input type="checkbox" checked={record.selected} onChange={onSelect && function() {onSelect(index)}} />
-                                    </td>
-
-                                    {/* Fields displaying */}
-                                    {
-                                        tableConfig.columns.map(
-                                            function ([field, _]: [ keyof T, string ]) {
-                                                return (
-                                                    <td key={`${index}${field.toString()}`}>
-                                                        { record[field] as any }
-                                                    </td>
-                                                )
-                                            }
-                                        )
-                                    }
-
-                                    {/* Operation buttons */}
-                                    <td className="textAlignRight">
-                                        {/* Edit button */}
-                                        {
-                                            editable && (
-                                                <Button type="normal" value="Sửa" onClick={onEdit && function() {onEdit(index)}} className="inlineBlock fontSize12px margin5px" />
-                                            )
-                                        }
-
-                                        {/* View button */}
-                                        {
-                                            viewable && (
-                                                <Button type="normal" value="Chi tiết" onClick={onView && function() {onView(index)}} className="inlineBlock fontSize12px margin5px" />
-                                            )
-                                        }
-                                        
-                                        {/* Delete button */}
-                                        {
-                                            deletable && (
-                                                <Button type="normal" value="Xóa" onClick={onDelete && function() {onDelete(index)}} className="inlineBlock fontSize12px margin5px" />
-                                            )
-                                        }
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    )
-                }
-
-            </tbody>
-
-        </table>
+            </table>
+        </div>
     )
 }
