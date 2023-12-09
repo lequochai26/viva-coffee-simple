@@ -4,6 +4,7 @@ import { itemManager, orderItemManager, orderManager, userManager } from "@/doma
 import { OrderEntity, OrderItemEntity } from "./aliases/entityAliases";
 import orderJsonToOrderEntity from "./scripts/orderJsonToOrderEntity";
 import orderIdGenerate from "./scripts/orderIdGenerate";
+import { orderEntityToOrderJson } from "./scripts/orderEntityToOrderJson";
 
 // Methods:
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -114,7 +115,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         // Success responding
         return NextResponse.json(
-            { success: true, id: id, date: date }
+            { success: true, result: orderEntityToOrderJson(order) }
         );
     }
     catch (error: any) {
