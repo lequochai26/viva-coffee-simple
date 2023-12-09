@@ -5,6 +5,7 @@ import User from "@/app/interfaces/User";
 import Item from "@/app/interfaces/Item";
 import AddOrderBox from "./AddOrderBox";
 import AddOrderItemBox from "./AddOrderItemBox";
+import { ViewOrderBox } from "../ViewOrderBox";
 
 // Info:
 const routeHandler: string = "/management/order";
@@ -25,6 +26,7 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
     );
     const [ itemList, setItemList ] = useState<{ [index: string]: Item[] }>({});
     const [ keyword, setKeyword ] = useState<string>("");
+    const [ done, setDone ] = useState<boolean>(false);
 
     // Data operations:
     async function load(keyword?: string): Promise<void> {
@@ -90,7 +92,7 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
             );
 
             // Parsing response's body into json
-            const { success, message }: { success: boolean, message: string } = await response.json();
+            const { success, result, message }: { success: boolean, result: Order, message: string } = await response.json();
 
             // Failed case
             if (!success) {
@@ -101,8 +103,11 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
                 // Fire onAlter
                 onAlter();
 
-                // Close
-                close();
+                // Set fields as result
+                setFields(result);
+
+                // Update done
+                setDone(true);
             }
         }
         catch (error: any) {
@@ -172,26 +177,31 @@ export default function AddOrderScreen({ user, onAlter, close }: EntityAlterScre
 
     // View:
     return (
-        <div className="inlineBlock verticalAlignMiddle widthFitParent heightFitContent">
-            {/* Add order box */}
-            <AddOrderBox
-                fields={fields}
-                onAdd={addNewOrder}
-                onAmountChange={changeOrderItemAmount}
-                onCancel={close}
-                onRemove={removeOrderItem}
-            />
+        !done ? (
+            <div className="inlineBlock verticalAlignMiddle widthFitParent heightFitContent">
+                {/* Add order box */}
+                <AddOrderBox
+                    fields={fields}
+                    onAdd={addNewOrder}
+                    onAmountChange={changeOrderItemAmount}
+                    onCancel={close}
+                    onRemove={removeOrderItem}
+                />
 
-            {/* Add order item box */}
-            <AddOrderItemBox
-                itemList={itemList}
-                keyword={keyword}
-                onAdd={addOrderItem}
-                onKeywordChange={changeKeyword}
-                onReload={function () {load()}}
-                onSearch={function () {load(keyword)}}
-            />
-        </div>
+                {/* Add order item box */}
+                <AddOrderItemBox
+                    itemList={itemList}
+                    keyword={keyword}
+                    onAdd={addOrderItem}
+                    onKeywordChange={changeKeyword}
+                    onReload={function () {load()}}
+                    onSearch={function () {load(keyword)}}
+                />
+            </div>
+        )
+        : (
+            <ViewOrderBox close={close} onAlter={onAlter} target={fields} />
+        )
     )
 }
 
