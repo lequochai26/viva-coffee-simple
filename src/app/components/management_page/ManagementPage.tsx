@@ -18,6 +18,7 @@ import AddOrderScreen from "./add_order_screen/AddOrderScreen";
 import { ViewOrderBox } from "./ViewOrderBox";
 import DeleteConfirmDialog from "./DeleteConfirmDialog";
 import FixedScreen from "../FixedScreen";
+import ChangePasswordBox from "./ChangePasswordBox";
 
 // Interfaces:
 interface ManagementPageProps {
@@ -152,6 +153,27 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
         );
     }
 
+    function closeFixedScreen() {
+        setFixedScreenContent(undefined);
+    }
+
+    function showChangePasswordBox() {
+        setFixedScreenContent(
+            <ChangePasswordBox
+                user={user}
+                onCancel={closeFixedScreen}
+                onSuccess={
+                    function () {
+                        closeFixedScreen();
+                        if (onLogout) {
+                            onLogout();
+                        }
+                    }
+                }
+            />
+        );
+    }
+
     // View:
     return (
         <>
@@ -167,6 +189,7 @@ export default function ManagementPage({ user, onLogout }: ManagementPageProps) 
                     onItemManagementMenuClick={showItemManagement}
                     onItemTypeManagementMenuClick={showItemTypeManagement}
                     onOrderManagementMenuClick={showOrderManagement}
+                    onChangePassword={showChangePasswordBox}
                 />
 
                 {/* Content area */}

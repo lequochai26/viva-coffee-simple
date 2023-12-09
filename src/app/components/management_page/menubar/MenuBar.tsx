@@ -11,15 +11,16 @@ interface MenuBarProps {
     onItemManagementMenuClick?(): void;
     onItemTypeManagementMenuClick?(): void;
     onOrderManagementMenuClick?(): void;
+    onChangePassword?(): void;
 }
 
 // Main component:
-export default function MenuBar({ user, onLogout, show, onUserManagementMenuClick, onItemManagementMenuClick, onItemTypeManagementMenuClick, onOrderManagementMenuClick }: MenuBarProps) {
+export default function MenuBar({ user, onLogout, show, onUserManagementMenuClick, onItemManagementMenuClick, onItemTypeManagementMenuClick, onOrderManagementMenuClick, onChangePassword }: MenuBarProps) {
     // View:
     return (
         <div className={`${show ? "inlineBlock": "none"} width200px heightFitParent borderBlackThin verticalAlignTop`}>
             {/* User area */}
-            <UserArea user={user} onLogout={onLogout} />
+            <UserArea user={user} onLogout={onLogout} onChangePassword={onChangePassword} />
 
             {/* Management menu items */}
             {
