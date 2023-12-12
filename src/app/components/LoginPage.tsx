@@ -1,13 +1,12 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import Button from "./Button";
+import User from "../interfaces/User";
 
 export type LoginOnSubmit = (username: string, password: string) => void;
 
 export interface LoginPageProps {
-    onSubmit?: LoginOnSubmit;
-    message?: string;
-    messageClassName?: string;
+    onLogin(user: User): void;
 }
 
 interface LoginFormFields {
@@ -15,23 +14,54 @@ interface LoginFormFields {
     password?: string;
 }
 
-export function LoginPage(props: LoginPageProps) {
+export function LoginPage({ onLogin }: LoginPageProps) {
     // States:
     const [ fields, setFields ] = useState<LoginFormFields>({});
+    const [ message, setMessage ] = useState<string | undefined>(undefined);
 
     // Event handlers:
     function onFieldChanged({ target }: any): void {
         setFields({...fields, [target.name]: target.value});
     }
 
-    function onSubmit(event: any) {
+    async function onSubmit(event: any): Promise<void> {
+        // Default preventing
         event.preventDefault();
 
-        if (props.onSubmit) {
-            props.onSubmit(
-                (fields.username ? fields.username : ""),
-                (fields.password ? fields.password : "")
+        try {
+            // Sending HTTP request and receiving response
+            const response: Response = await fetch(
+                "/login",
+                {
+                    method: "POST",
+                    body: JSON.stringify(
+                        {
+                            username: fields.username,
+                            password: fields.password
+                        }
+                    )
+                }
             );
+
+            // Parsing response's body into json
+            const body: any = await response.json();
+
+            // Destruct body
+            const { success, user, message }: { success: boolean, user: User, message: string } = body;
+
+            // Failed case
+            if (!success) {
+                setMessage(message);
+            }
+            // Success case
+            else {
+                // Fire onLogin event handler
+                onLogin(user);
+            }
+        }
+        catch (error: any) {
+            alert("Đã có lỗi xảy ra!");
+            console.error(error);
         }
     }
 
@@ -66,6 +96,17 @@ export function LoginPage(props: LoginPageProps) {
                     <div className="margin10px">
                         <Button type="submit" value="Đăng nhập" />
                     </div>
+
+                    {/* Message displaying area */}
+                    {
+                        message && (
+                            <div>
+                                <p className="width200px heightFitContent textColorRed fontSize12px textAlignJustify">
+                                    { message }
+                                </p>
+                            </div>
+                        )
+                    }
                 </form>
             </div>
         </div>
