@@ -30,9 +30,13 @@ export default function DataTable<T extends DataRow>({ tableConfig, editable, vi
                     
                     <tr>
                         {/* Select all column */}
-                        <th>
-                            <input type="checkbox" checked={selectAll} onChange={onSelectAll} />
-                        </th>
+                        {
+                            deletable && (
+                                <th>
+                                    <input type="checkbox" checked={selectAll} onChange={onSelectAll} />
+                                </th>
+                            )
+                        }
 
                         {/* Columns */}
                         {
@@ -65,9 +69,13 @@ export default function DataTable<T extends DataRow>({ tableConfig, editable, vi
                                 return (
                                     <tr key={index}>
                                         {/* Select checkbox */}
-                                        <td>
-                                            <input type="checkbox" checked={record.selected} onChange={onSelect && function() {onSelect(index)}} />
-                                        </td>
+                                        {
+                                            deletable && (
+                                                <td>
+                                                    <input type="checkbox" checked={record.selected} onChange={onSelect && function() {onSelect(index)}} />
+                                                </td>
+                                            )
+                                        }
 
                                         {/* Fields displaying */}
                                         {
